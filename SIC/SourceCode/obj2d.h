@@ -3,6 +3,8 @@
 
 struct OBJ2D
 {
+	bool OnGround;
+	char pad[3];
 	VECTOR2 speed;
 	VECTOR2 pos;
 	VECTOR2 HalfSize;

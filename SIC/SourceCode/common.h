@@ -10,18 +10,14 @@
 
 #define MAPCHIP_SIZE 64.0f
 #define MAPCHIP_HALFSIZE (MAPCHIP_SIZE / 2)
-#define CAUTION_TIMER 450
-#define CAUTION_INIT 150
-
-
+#define GRAVITY 0.2f
+#define MAX_SPEED 1.0f
 #define JUMP_POWER -15.0f * 2
+
 //‰æ–Ê‚Ì‘å‚«‚³
 #define SCREEN_W 1280
 #define SCREEN_H 720
-#if 0
-#define SCREEN_W 1920 / 2
-#define SCREEN_H 720
-#endif
+
 
 
 #define MAP_MAX_WIDTH 100
@@ -37,9 +33,14 @@
 extern int curScene;
 extern int nextScene;
 extern int title_state;
-extern int title_timer;
 extern int game_state;
+extern int menu_state;
+extern int result_state;
+extern int title_timer;
 extern int game_timer;
+extern int menu_timer;
+extern int result_timer;
+extern VECTOR2 scroll;
 
 
 
