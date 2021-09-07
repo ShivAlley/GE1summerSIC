@@ -3,6 +3,26 @@
 int game_state;
 int game_timer;
 
+void scrollMap()
+{
+
+	if (scroll.x < player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X)
+		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
+	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
+		scroll.x = player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X;
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y)
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y;
+
+	if (scroll.x < 0) scroll.x = 0;
+	if (scroll.x > SCREEN_W - SCREEN_W)
+		scroll.x = SCREEN_W - SCREEN_W;
+	if (scroll.y < 0) scroll.y = 0;
+	/*if (scroll.y > WorldHeight - SCREEN_H)
+		scroll.y = WorldHeight - SCREEN_H;*/
+
+}
 
 void game_init()
 {
@@ -42,6 +62,7 @@ void game_update()
 		player_update();
 		enemy_update();
 		map_update();
+		scrollMap();
 
 		game_timer++;
 		

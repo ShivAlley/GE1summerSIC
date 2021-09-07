@@ -26,6 +26,12 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			case SCENE_GAME:
 				game_deinit();
 				break;
+			case SCENE_MENU:
+				game_deinit();
+				break;
+			case SCENE_RESULT:
+				result_deinit();
+				break;
 			}
 
 			//Ÿ‚ÌƒV[ƒ“‚É‰‚¶‚½‰Šúİ’èˆ—
@@ -36,6 +42,12 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 				break;
 			case SCENE_GAME:
 				game_init();
+				break;
+			case SCENE_MENU:
+				game_init();
+				break;
+			case SCENE_RESULT:
+				result_init();
 				break;
 			}
 			//nextscene‚ªCurscene‚É‚È‚é
@@ -58,6 +70,14 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			game_update();
 			game_render();
 			break;
+		case SCENE_MENU:
+			menu_update();
+			menu_render();
+			break;
+		case SCENE_RESULT:
+			result_update();
+			result_render();
+			break;
 		}
 
 		//7:‰æ–Ê‚ğ•`Ê‚·‚é
@@ -75,6 +95,12 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 		break;
 	case SCENE_GAME:
 		game_deinit();
+		break;
+	case SCENE_MENU:
+		menu_deinit();
+		break;
+	case SCENE_RESULT:
+		result_deinit();
 		break;
 	}
 

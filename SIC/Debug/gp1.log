@@ -1,3 +1,12 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: 中間ディレクトリ (Debug\) に別のプロジェクト (2dshoot.vcxproj, gp1.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
+  audio.cpp
+  enemy.cpp
+  main.cpp
+  map.cpp
+  menu.cpp
+  result.cpp
+  scene_title.cpp
+  scene_game.cpp
   player.cpp
+  コードを生成中...
   gp1.vcxproj -> C:\Users\2210196\Documents\GitHub\GE1summerSIC\SIC\Debug\DropAction.exe

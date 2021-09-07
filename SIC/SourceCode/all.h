@@ -11,13 +11,14 @@
 
 //個々のヘッダーは下のほうへ
 #include "scene_title.h"
-
 #include "scene_game.h"
+#include "menu.h"
 
 #include "player.h"
 #include "enemy.h"
 #include "map.h"
 #include "audio.h"
+#include "result.h"
 
 
 
