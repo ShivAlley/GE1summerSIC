@@ -1,0 +1,96 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: 中間ディレクトリ (Release\) に別のプロジェクト (gp1.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
+  audio.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+  enemy.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(8,30): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(8,17): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(9,30): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(9,17): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(111,25): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(747,42): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(765,33): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(65,14): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(765,48): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(792,21): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(65,14): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(792,36): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(834,25): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(834,39): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(917,17): warning C4456: 'i' を宣言すると、以前のローカル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(900,18): message : 'i' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(1031,23): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(1439,40): warning C4459: 'enemy' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\enemy.cpp(45,7): message : 'enemy' の宣言を確認してください
+  main.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+  player.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(13,27): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(13,42): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(73,24): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(84,22): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(84,37): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(106,23): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(106,38): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(114,21): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(114,36): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(122,24): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(122,39): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(130,23): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(130,38): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(138,23): warning C4459: 'player' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(5,7): message : 'player' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(138,38): warning C4459: 'box' を宣言すると、グローバル宣言が隠蔽されます
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\obj2d.h(66,14): message : 'box' の宣言を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\player.cpp(403,6): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  scene_game.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\scene_game.cpp(276,13): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\scene_game.cpp(278,14): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+  scene_title.cpp
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(20,1): warning C4005: 'SCREEN_W': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(17): message : 'SCREEN_W' の以前の定義を確認してください
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(21,1): warning C4005: 'SCREEN_H': マクロが再定義されました。
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\SourceCode\common.h(18): message : 'SCREEN_H' の以前の定義を確認してください
+  コード生成しています。
+  13 of 602 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  gp1.vcxproj -> C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\Release\2dshoot.exe

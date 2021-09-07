@@ -1,0 +1,3 @@
+C:\Users\2210196\Desktop\2021前期\ゲームプログラミング１\gp1\Debug\2dshoot.exe
+C:\Users\2210196\Documents\GitHub\GE1summerSIC\SIC\Debug\DropAction.exe
+C:\Users\2210256\Documents\GitHub\GE1summerSIC\SIC\Debug\DropAction.exe

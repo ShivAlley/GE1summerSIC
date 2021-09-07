@@ -1,0 +1,47 @@
+#ifndef COMMON_H
+#define COMMON_H
+//ÉVÅ[ÉìÇÃÉâÉxÉã
+#define SCENE_NONE 0
+#define SCENE_TITLE 1
+#define SCENE_GAME 2
+#define SCENE_MENU 3
+#define SCENE_RESULT 4
+
+
+#define MAPCHIP_SIZE 64.0f
+#define MAPCHIP_HALFSIZE (MAPCHIP_SIZE / 2)
+#define CAUTION_TIMER 450
+#define CAUTION_INIT 150
+
+
+#define JUMP_POWER -15.0f * 2
+//âÊñ ÇÃëÂÇ´Ç≥
+#define SCREEN_W 1280
+#define SCREEN_H 720
+#if 0
+#define SCREEN_W 1920 / 2
+#define SCREEN_H 720
+#endif
+
+
+#define MAP_MAX_WIDTH 100
+#define MAP_MAX_HEIGHT 100
+#define WorldWidth (MAPCHIP_SIZE * MapWidth) 
+#define WorldHeight (MAPCHIP_SIZE * MapHeight)
+#define SCROLL_MERGIN_X (SCREEN_W / 2)
+#define SCROLL_MERGIN_Y (SCREEN_H / 2)
+#define ToRadian( x )   DirectX::XMConvertToRadians( x )    
+#define ToDegree( x )   DirectX::XMConvertToDegrees( x )    
+
+//ïœêîÇÃêÈåæ
+extern int curScene;
+extern int nextScene;
+extern int title_state;
+extern int title_timer;
+extern int game_state;
+extern int game_timer;
+
+
+
+
+#endif// COMMON_H
