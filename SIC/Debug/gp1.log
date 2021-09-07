@@ -4,9 +4,10 @@
   main.cpp
   map.cpp
   menu.cpp
-  result.cpp
-  scene_title.cpp
-  scene_game.cpp
   player.cpp
+  result.cpp
+  scene_game.cpp
+  scene_title.cpp
   コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\2210196\Documents\GitHub\GE1summerSIC\SIC\Debug\DropAction.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   gp1.vcxproj -> C:\Users\2210196\Documents\GitHub\GE1summerSIC\SIC\Debug\DropAction.exe
