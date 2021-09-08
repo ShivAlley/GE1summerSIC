@@ -169,7 +169,6 @@
     <ClInclude Include="SourceCode\menu.h" />
     <ClInclude Include="SourceCode\scene_title.h" />
     <ClInclude Include="SourceCode\player.h" />
-    <ClInclude Include="SourceCode\stage_edit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLib\debug.cpp" />
@@ -197,7 +196,6 @@
       </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SourceCode\player.cpp" />
-    <ClCompile Include="SourceCode\stage_edit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

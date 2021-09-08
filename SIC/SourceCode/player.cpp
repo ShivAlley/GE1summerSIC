@@ -4,12 +4,14 @@
 int PlayerState;
 float fade;
 int score;
+float MaxSpeed;
 OBJ2D player;
 VECTOR2 scroll;
 
 
 void player_moveX(OBJ2D* player)
 {
+	player->pos.x += player->speed.x;
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
 		player->speed.x += 0.3f;
 		if (TRG(0) & PAD_RIGHT && player->scale.x < 0)
@@ -20,31 +22,31 @@ void player_moveX(OBJ2D* player)
 		if (TRG(0) & PAD_LEFT && player->scale.x > 0)
 			player->scale.x *= -1.0f;
 	}
+	if (player->pos.x < player->HalfSize.x) {
+		player->pos.x = player->HalfSize.x;
+		player->speed.x = 0;
+	}
+	if (player->pos.x > SCREEN_W - player->HalfSize.x) {
+		player->pos.x = SCREEN_W - player->HalfSize.x;
+		player->speed.x = 0;
+	}
+
 	player->speed.x *= 0.98f;
 }
 void player_moveY(OBJ2D* player)
 {
-	//if (STATE(0) & PAD_DOWN && !(STATE(0) & PAD_UP)) {
-	//	player.speed.y += 0.3f;
-	//}
-	//else if (STATE(0) & PAD_UP && !(STATE(0) & PAD_DOWN)) {
-	//	player.speed.y -= 0.3f;
-	//}
-	//if (player.pos.x<0 || player.pos.x>SCREEN_W)
-	//{
-	//	player.speed.x = -player.speed.x;
-	//}
-	//if (player.pos.y < 0||player.pos.y>SCREEN_H)
-	//{
-	//	player.speed.y = -player.speed.y;
-	//}
-	player->speed.y += GRAVITY;
-	if (player->speed.y < MAX_SPEED)
-		player->speed.y = MAX_SPEED;
-	//HACK:�b��I�Ȓn�ʂ̎����̂��߉��C���K�v
-	if (player->pos.y > SCREEN_H * 4)
+	player->pos.y += player->speed.y;
+	player->speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
+	
+	if (!(STATE(0) & PAD_TRG1) && player->speed.y > (MAX_SPEED_Y + GRAVITY) / 4)
+		player->speed.y -= GRAVITY * 2; //ブレーキの加減
+	if (player->speed.y > MAX_SPEED_Y)
+		player->speed.y = MAX_SPEED_Y;
+
+	//HACK:暫定的な地面の実装のため改修が必要
+	if (player->pos.y > SCREEN_H * 42/*masicNumber*/)
 	{		  
-		player->pos.y = SCREEN_H * 4;
+		player->pos.y = SCREEN_H * 42;
 		player->speed.y = 0.0f;
 		player->OnGround = true;
 	}
@@ -58,32 +60,27 @@ void player_update()
 	switch (PlayerState)
 	{
 	case 0:
-		//�����ݒ�
+		//初期設定
 		++PlayerState;
 		//fallthrough
 	case 1:
-		//�p�����[�^�̐ݒ�
+		//パラメータの設定
 		player = {};
 		player.pos = { SCREEN_W / 2 , SCREEN_H / 2 };
 		player.HalfSize = { MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE };
+		MaxSpeed = MAX_SPEED_Y;
 		++PlayerState;
 		//fallthrough
 	case 2: 
 		//loop
 		player_moveX(&player);
-		player.pos.x += player.speed.x;
 		player_moveY(&player);
-		player.pos.y += player.speed.y;
 		debug::setString("posx%f", player.pos.x);
 		debug::setString("posy%f", player.pos.y);
 		debug::setString("OnGround%d", player.OnGround);
 		debug::setString("fade%f", fade);
-		if (STATE(0) & PAD_TRG1)
-		{
-			player.speed.y *= 0.95f;
-			if (player.speed.y < MAX_SPEED / 2)
-				player.speed.y = MAX_SPEED / 2;
-		}
+		debug::setString("speedY%f", player.speed.y);
+		
 
 		if (player.OnGround)
 		{
@@ -109,7 +106,7 @@ void player_render()
 		player.angle,
 		{ 1,0,0,1 }
 	);
-	if (player.OnGround == true)
+	if (player.OnGround)
 	{
 		primitive::rect(
 			0, 0,

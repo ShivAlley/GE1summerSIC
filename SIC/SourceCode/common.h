@@ -8,10 +8,10 @@
 #define SCENE_RESULT 4
 
 
-#define MAPCHIP_SIZE 64.0f
+#define MAPCHIP_SIZE 32.0f
 #define MAPCHIP_HALFSIZE (MAPCHIP_SIZE / 2)
-#define GRAVITY 0.2f
-#define MAX_SPEED 1.0f
+#define GRAVITY 0.1f
+#define MAX_SPEED_Y 24.0f
 #define JUMP_POWER -15.0f * 2
 
 
