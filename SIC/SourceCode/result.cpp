@@ -2,7 +2,8 @@
 
 int result_state;
 int result_timer;
-
+//std::string str;
+//str = std::to_string(score);
 void result_update()
 {
 	//switch (result_state)
@@ -22,7 +23,8 @@ void result_update()
 
 void result_render()
 {
-	GameLib::clear(0.2f, 0.2f, 0.2f);
+	GameLib::clear(1, 0.2f, 0.2f);
+	text_out(1, "score", 300, 500, 2, 2, 1, 1, 0);
 }
 
 void result_init()
@@ -34,4 +36,5 @@ void result_deinit()
 {
 
 }
+
 

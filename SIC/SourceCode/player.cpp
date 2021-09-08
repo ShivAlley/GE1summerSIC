@@ -2,24 +2,27 @@
 
 
 int PlayerState;
+float fade;
+int score;
 OBJ2D player;
 VECTOR2 scroll;
 
-void player_moveX()
+
+void player_moveX(OBJ2D* player)
 {
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
-		player.speed.x += 0.3f;
-		if (TRG(0) & PAD_RIGHT && player.scale.x < 0)
-			player.scale.x *= -1.0f;
+		player->speed.x += 0.3f;
+		if (TRG(0) & PAD_RIGHT && player->scale.x < 0)
+			player->scale.x *= -1.0f;
 	}
 	else if (STATE(0) & PAD_LEFT && !(STATE(0) & PAD_RIGHT)) {
-		player.speed.x -= 0.3f;
-		if (TRG(0) & PAD_LEFT && player.scale.x > 0)
-			player.scale.x *= -1.0f;
+		player->speed.x -= 0.3f;
+		if (TRG(0) & PAD_LEFT && player->scale.x > 0)
+			player->scale.x *= -1.0f;
 	}
-	player.speed.x *= 0.98f;
+	player->speed.x *= 0.98f;
 }
-void player_moveY()
+void player_moveY(OBJ2D* player)
 {
 	//if (STATE(0) & PAD_DOWN && !(STATE(0) & PAD_UP)) {
 	//	player.speed.y += 0.3f;
@@ -35,15 +38,15 @@ void player_moveY()
 	//{
 	//	player.speed.y = -player.speed.y;
 	//}
-	player.speed.y += GRAVITY;
-	if (player.speed.y < MAX_SPEED)
-		player.speed.y = MAX_SPEED;
+	player->speed.y += GRAVITY;
+	if (player->speed.y < MAX_SPEED)
+		player->speed.y = MAX_SPEED;
 	//HACK:Žb’è“I‚È’n–Ê‚ÌŽÀ‘•‚Ì‚½‚ß‰üC‚ª•K—v
-	if (player.pos.y > SCREEN_H * 4)
-	{
-		player.pos.y = SCREEN_H * 4;
-		player.speed.y = 0.0f;
-		player.OnGround = true;
+	if (player->pos.y > SCREEN_H * 4)
+	{		  
+		player->pos.y = SCREEN_H * 4;
+		player->speed.y = 0.0f;
+		player->OnGround = true;
 	}
 
 }
@@ -67,17 +70,32 @@ void player_update()
 		//fallthrough
 	case 2: 
 		//loop
-		player_moveX();
+		player_moveX(&player);
 		player.pos.x += player.speed.x;
-		player_moveY();
+		player_moveY(&player);
 		player.pos.y += player.speed.y;
 		debug::setString("posx%f", player.pos.x);
 		debug::setString("posy%f", player.pos.y);
-		if (STATE(0) & PAD_TRG1) {
+		debug::setString("OnGround%d", player.OnGround);
+		debug::setString("fade%f", fade);
+		if (STATE(0) & PAD_TRG1)
+		{
 			player.speed.y *= 0.95f;
 			if (player.speed.y < MAX_SPEED / 2)
 				player.speed.y = MAX_SPEED / 2;
 		}
+		if (player.OnGround)
+		{
+			fade += 0.008f;
+			score = player.pos.y;
+		}
+		if (fade > 1)
+		{
+			nextScene = SCENE_RESULT;
+			fade = 0;
+			player.OnGround = false;
+		}
+
 	}
 }
 
@@ -89,14 +107,29 @@ void player_render()
 		player.angle,
 		{ 1,0,0,1 }
 	);
+	if (player.OnGround == true)
+	{
+		primitive::rect(
+			0, 0,
+			SCREEN_W, SCREEN_H,
+			0, 0,
+			0,
+			1, 1, 1, fade
+		);
+	}
 }
 
 void player_init()
 {
-
+	fade = 0;
 }
 
 void player_deinit()
 {
 
+}
+
+void fadeout()
+{
+	
 }
