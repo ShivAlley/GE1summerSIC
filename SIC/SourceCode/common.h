@@ -14,6 +14,7 @@
 #define MAX_SPEED 1.0f
 #define JUMP_POWER -15.0f * 2
 
+
 //‰æ–Ê‚Ì‘å‚«‚³
 #define SCREEN_W 1280
 #define SCREEN_H 720
@@ -40,6 +41,7 @@ extern int title_timer;
 extern int game_timer;
 extern int menu_timer;
 extern int result_timer;
+extern int score;
 extern VECTOR2 scroll;
 
 

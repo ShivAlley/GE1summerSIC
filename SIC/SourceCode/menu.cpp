@@ -2,7 +2,9 @@
 
 int menu_state;
 int menu_timer;
-int StageSelect = 0;
+
+int cursor;
+
 enum stage
 {
 	first = 0,
@@ -14,6 +16,8 @@ enum stage
 
 void menu_update()
 {
+
+
 	switch (menu_state)
 	{
 	case 0:
@@ -31,6 +35,11 @@ void menu_update()
 			nextScene = SCENE_TITLE;
 			break;
 		}
+		if (TRG(0) & PAD_RIGHT)cursor++;
+		if (TRG(0) & PAD_LEFT)cursor--;
+		if (cursor < first)cursor = first;
+		if (cursor > fifth)cursor = fifth;
+		
 
 		
 
@@ -78,11 +87,64 @@ void menu_render()
 		0,
 		1, 0, 0, 1
 	);
+	if (cursor == first)
+	{
+		primitive::rect(
+			SCREEN_W / 5, SCREEN_H / 2,
+			MAPCHIP_SIZE, MAPCHIP_SIZE,
+			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
+			0,
+			0, 0, 1, 1
+		);
+	}
+	if (cursor == second)
+	{
+		primitive::rect(
+			SCREEN_W / 5*2, SCREEN_H / 2,
+			MAPCHIP_SIZE, MAPCHIP_SIZE,
+			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
+			0,
+			0, 0, 1, 1
+		);
+	}
+	if (cursor == third)
+	{
+		primitive::rect(
+			SCREEN_W / 5 * 3, SCREEN_H / 2,
+			MAPCHIP_SIZE, MAPCHIP_SIZE,
+			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
+			0,
+			0, 0, 1, 1
+		);
+	}
+	if (cursor == fourth)
+	{
+		primitive::rect(
+			SCREEN_W / 5 * 4, SCREEN_H / 2,
+			MAPCHIP_SIZE, MAPCHIP_SIZE,
+			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
+			0,
+			0, 0, 1, 1
+		);
+	}
+	if (cursor == fifth)
+	{
+		primitive::rect(
+			SCREEN_W / 5 * 5, SCREEN_H / 2,
+			MAPCHIP_SIZE, MAPCHIP_SIZE,
+			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
+			0,
+			0, 0, 1, 1
+		);
+	}
+
 }
 
 void menu_init()
 {
-
+	menu_state = 0;
+	menu_timer = 0;
+	cursor = 0;
 }
 
 void menu_deinit()
