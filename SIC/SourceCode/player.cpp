@@ -78,6 +78,7 @@ void player_update()
 			if (player.speed.y < MAX_SPEED / 2)
 				player.speed.y = MAX_SPEED / 2;
 		}
+		
 	}
 }
 

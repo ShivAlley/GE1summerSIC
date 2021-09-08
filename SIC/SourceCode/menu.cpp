@@ -2,6 +2,7 @@
 
 int menu_state;
 int menu_timer;
+int StageSelect = 0;
 enum stage
 {
 	first = 0,
@@ -13,7 +14,6 @@ enum stage
 
 void menu_update()
 {
-	int select = 0;
 	switch (menu_state)
 	{
 	case 0:
@@ -32,6 +32,7 @@ void menu_update()
 			break;
 		}
 
+		
 
 
 	}
