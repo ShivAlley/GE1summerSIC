@@ -21,8 +21,8 @@
 
 
 
-#define MAP_MAX_WIDTH 50
-#define MAP_MAX_HEIGHT 50
+#define MAP_MAX_WIDTH 80
+#define MAP_MAX_HEIGHT 80
 #define WorldWidth (MAPCHIP_SIZE * MapWidth) 
 #define WorldHeight (MAPCHIP_SIZE * MapHeight)
 #define SCROLL_MERGIN_X (SCREEN_W / 2)
