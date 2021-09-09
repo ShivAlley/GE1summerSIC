@@ -32,6 +32,10 @@ void title_update()
 			nextScene = SCENE_MENU;
 			break;
 		}
+		if (TRG(0) & PAD_SELECT)
+		{
+			exit(0);
+		}
 		break;
 		/*switch (choose)
 		{

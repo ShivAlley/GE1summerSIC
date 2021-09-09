@@ -1,6 +1,7 @@
 #include "all.h"
 
 int EnemyState;
+int invi_timer;
 
 struct ENEMY_DATA {
     Sprite* spr;
@@ -106,6 +107,7 @@ void enemy_update()
             
         }
         //debug::setString("Enemy%d", sizeof(enemySet) / sizeof(ENEMY_SET));
+        debug::setString("TIMER%d", invi_timer);
     }
 
     } //switch}
@@ -163,9 +165,17 @@ void moveEnemy0(OBJ2D* obj)
             obj->speed.x *= -1;
         if (HitCheck(&player, obj))
         {
+            if (invi_timer == 0)
+            {
+                player.HitPoint--;
+                player.color.z += 0.33f;
+                invi_timer++;
+            }
             
         }
-
+        if (invi_timer > 0)invi_timer++;
+        if (invi_timer > 0)invi_timer = 0;
+        
         
 
 
@@ -180,6 +190,7 @@ void enemy_init()
         enemy[i] = {};
         enemy[i].MoveAlg = -1;
     }
+    invi_timer = 0;
 }
 
 void enemy_deinit()

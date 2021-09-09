@@ -3,7 +3,7 @@
 #include "all.h"
 
 int curScene = SCENE_NONE;
-int nextScene = SCENE_MENU;
+int nextScene = SCENE_TITLE;
 
 //2:WinMainŠÖ”‚ğ‹Lq‚·‚é
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
