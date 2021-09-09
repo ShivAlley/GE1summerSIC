@@ -197,16 +197,22 @@ void moveEnemy1(OBJ2D* obj)
         obj->HalfSize.x = MAPCHIP_SIZE;
         obj->angle = ToRadian(0);
         obj->color.w = 1.0f;
-
-        ++obj->state;
+        {
+            
+            float dx = player.pos.x - obj->pos.x;
+            float dy = player.pos.y - obj->pos.y;
+            float dist = sqrtf(dx * dx + dy * dy);
+            obj->speed = { dx / dist * 8,dy / dist * 8 };
+        }
+        if ((obj->pos.y - player.pos.y) < SCREEN_H)++obj->state;
         //fallthrough
     case 1:
 
         //enemy_act(obj);
 
-        obj->pos.x += obj->speed.x;
+        if ((obj->pos.y - player.pos.y) < SCREEN_H)obj->pos+= obj->speed;
 
-        obj->pos.y += obj->speed.y;
+     
         if (HitCheck(&player, obj))
         {
             player.HitPoint--;
