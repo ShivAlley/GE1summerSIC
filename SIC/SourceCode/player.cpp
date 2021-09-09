@@ -50,6 +50,14 @@ void player_moveY(OBJ2D* player)
 		player->OnGround = true;
 	}
 
+#if _DEBUG
+	if (STATE(0) & PAD_UP)
+	{
+		player->speed.y -= GRAVITY * 4;
+	}
+#endif // _DEBUG
+
+
 }
 
 bool HitCheck(OBJ2D* player, OBJ2D* enemy)

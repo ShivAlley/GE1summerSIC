@@ -28,6 +28,7 @@ OBJ2D enemy[ENEMY_MAX];
 ENEMY_SET enemySet[] =
 {
     {0,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
+    {-1,-1,{}},
 
 };
 
@@ -115,8 +116,23 @@ void enemy_update()
 void enemy_render()
 {
 
-}
+    for (int i = 0; i < ENEMY_MAX; ++i)
+    {
 
+        if (enemy[i].MoveAlg == -1) continue;
+        if (enemy[i].area != player.area) continue;
+        sprite_render(
+            enemy[i].spr,
+            enemy[i].pos.x - scroll.x, enemy[i].pos.y - scroll.y,
+            enemy[i].scale.x, enemy[i].scale.y,
+            enemy[i].TexPos.x, enemy[i].TexPos.y,
+            enemy[i].TexSize.x, enemy[i].TexSize.y,
+            enemy[i].pivot.x, enemy[i].pivot.y,
+            ToRadian(0),
+            1, 1, 1, enemy[i].color.w
+        );
+    }
+}
 void moveEnemy0(OBJ2D* obj)
 {
     switch (obj->state)
@@ -130,6 +146,7 @@ void moveEnemy0(OBJ2D* obj)
         obj->HalfSize.y = MAPCHIP_SIZE;
         obj->HalfSize.x = MAPCHIP_SIZE;
         obj->angle = ToRadian(0);
+        obj->speed.x = 1.0f;
         obj->color.w = 1.0f;
 
         ++obj->state;
@@ -138,18 +155,16 @@ void moveEnemy0(OBJ2D* obj)
 
         //enemy_act(obj);
 
-        obj->pos.y += obj->speed.y;
-
-        obj->speed.y += 1.0f;
-
-        
-
         obj->pos.x += obj->speed.x;
 
-
-
-       
-
+        if (obj->pos.x > SCREEN_W - obj->HalfSize.x)
+            obj->speed.x *= -1;
+        if (obj->pos.x < 0 + obj->HalfSize.x)
+            obj->speed.x *= -1;
+        if (HitCheck(&player, obj))
+        {
+            
+        }
 
         
 

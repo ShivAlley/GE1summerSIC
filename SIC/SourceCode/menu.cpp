@@ -38,6 +38,7 @@ void menu_update()
 		if (TRG(0) & PAD_START)
 		{
 			nextScene = SCENE_GAME;
+			player.area = cursor;
 			break;
 		}
 		if (TRG(0) & PAD_RIGHT)cursor++;

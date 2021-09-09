@@ -8,5 +8,7 @@ void enemy_update();
 void enemy_render();
 void enemy_deinit();
 
+void moveEnemy0(OBJ2D* obj);
+
 
 #endif // ENEMY_H

@@ -6,6 +6,8 @@ void player_update();
 void player_render();
 void player_deinit();
 
+bool HitCheck(OBJ2D* player, OBJ2D* enemy);
+
 extern OBJ2D player;
 
 #endif // PLAYER_H
