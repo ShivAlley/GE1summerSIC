@@ -174,7 +174,7 @@ void moveEnemy0(OBJ2D* obj)
             
         }
         if (invi_timer > 0)invi_timer++;
-        if (invi_timer > 0)invi_timer = 0;
+        if (invi_timer > 120)invi_timer = 0;
         
         
 
