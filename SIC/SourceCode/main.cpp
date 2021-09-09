@@ -3,7 +3,7 @@
 #include "all.h"
 
 int curScene = SCENE_NONE;
-int nextScene = SCENE_GAME;
+int nextScene = SCENE_MENU;
 
 //2:WinMainä÷êîÇãLèqÇ∑ÇÈ
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
@@ -27,7 +27,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 				game_deinit();
 				break;
 			case SCENE_MENU:
-				game_deinit();
+				menu_deinit();
 				break;
 			case SCENE_RESULT:
 				result_deinit();
@@ -44,7 +44,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 				game_init();
 				break;
 			case SCENE_MENU:
-				game_init();
+				menu_init();
 				break;
 			case SCENE_RESULT:
 				result_init();
