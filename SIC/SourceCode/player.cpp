@@ -166,7 +166,17 @@ void player_render()
 	);
 	if (player.OnGround)
 	{
+<<<<<<< Updated upstream
 		fadeout();
+=======
+		primitive::rect(
+			0, 0,
+			SCREEN_W, SCREEN_H,
+			0, 0,
+			0,
+			1, 1, 1, fade
+		);
+>>>>>>> Stashed changes
 	}
 }
 
