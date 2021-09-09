@@ -13,6 +13,7 @@
 #define GRAVITY 0.1f
 #define MAX_SPEED_Y 24.0f
 #define JUMP_POWER -15.0f * 2
+#define INVINCIBLE_TIMER 180
 
 
 //‰æ–Ê‚Ì‘å‚«‚³

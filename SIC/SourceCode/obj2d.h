@@ -17,6 +17,7 @@ struct OBJ2D
 	float angle;
 	VECTOR4 color;
 	int HitPoint;
+	int InvincibleTimer;
 	int MoveAlg;
 	unsigned int timer;
 	int act;

@@ -29,6 +29,7 @@ OBJ2D enemy[ENEMY_MAX];
 ENEMY_SET enemySet[] =
 {
     {0,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
+    {0,1,VECTOR2(SCREEN_W / 3, SCREEN_H * 3)},
     {-1,-1,{}},
 
 };
@@ -98,8 +99,8 @@ void enemy_update()
             switch (enemy[i].MoveAlg)
             {
             case 0:moveEnemy0(&enemy[i]); break;
-            /*case 1:moveEnemy1(&enemy[i]); break;
-            case 2:moveEnemy2(&enemy[i]); break;
+            case 1:moveEnemy1(&enemy[i]); break;
+            /*case 2:moveEnemy2(&enemy[i]); break;
             case 3:moveEnemy3(&enemy[i]); break;*/
             default: break;
             }
@@ -107,7 +108,7 @@ void enemy_update()
             
         }
         //debug::setString("Enemy%d", sizeof(enemySet) / sizeof(ENEMY_SET));
-        debug::setString("TIMER%d", invi_timer);
+        debug::setString("timer%d", player.InvincibleTimer);
     }
 
     } //switch}
@@ -133,6 +134,12 @@ void enemy_render()
             ToRadian(0),
             1, 1, 1, enemy[i].color.w
         );
+        primitive::rect(
+            enemy[i].pos - scroll, enemy[i].HalfSize * 2,
+            enemy[i].HalfSize,
+            enemy[i].angle,
+            VECTOR4(1, 1, 1, enemy[i].color.w)
+        );
     }
 }
 void moveEnemy0(OBJ2D* obj)
@@ -140,13 +147,13 @@ void moveEnemy0(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->scale = { 0.5f, 0.5f };
+        obj->scale = { 1.0f, 1.0f };
         obj->spr = EnemyData[0].spr;
         obj->TexPos = EnemyData[0].texPos;
         obj->TexSize = EnemyData[0].texSize;
         obj->pivot = EnemyData[0].pivot;
         obj->HalfSize.y = MAPCHIP_SIZE;
-        obj->HalfSize.x = MAPCHIP_SIZE;
+        obj->HalfSize.x = MAPCHIP_SIZE * 2;
         obj->angle = ToRadian(0);
         obj->speed.x = 1.0f;
         obj->color.w = 1.0f;
@@ -165,20 +172,49 @@ void moveEnemy0(OBJ2D* obj)
             obj->speed.x *= -1;
         if (HitCheck(&player, obj))
         {
-            if (invi_timer == 0)
-            {
-                player.HitPoint--;
-                player.color.z += 0.33f;
-                invi_timer++;
-            }
-            
+            player.HitPoint--;
+            player.InvincibleTimer = INVINCIBLE_TIMER;
+            player.color.z += 0.33f;
         }
-        if (invi_timer > 0)invi_timer++;
-        if (invi_timer > 120)invi_timer = 0;
-        
-        
+        //TODO:from shibutani
+        /*プレイヤーのY座標と敵のY座標の差がSCREENHの半分ぐらいになったら
+            自機に向かって直線で向かってくる敵の動き
+            SinfとCosf関数を使えばできそうな気がする*/
+        break;
+    }
+}
+void moveEnemy1(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->scale = { 1.0f, 1.0f };
+        obj->spr = EnemyData[0].spr;
+        obj->TexPos = EnemyData[0].texPos;
+        obj->TexSize = EnemyData[0].texSize;
+        obj->pivot = EnemyData[0].pivot;
+        obj->HalfSize.y = MAPCHIP_SIZE;
+        obj->HalfSize.x = MAPCHIP_SIZE;
+        obj->angle = ToRadian(0);
+        obj->color.w = 1.0f;
 
+        ++obj->state;
+        //fallthrough
+    case 1:
 
+        //enemy_act(obj);
+
+        obj->pos.x += obj->speed.x;
+
+        obj->pos.y += obj->speed.y;
+        if (HitCheck(&player, obj))
+        {
+            player.HitPoint--;
+            player.InvincibleTimer = INVINCIBLE_TIMER;
+            player.color.z += 0.33f;
+        }
+
+        
         break;
     }
 }
@@ -190,7 +226,6 @@ void enemy_init()
         enemy[i] = {};
         enemy[i].MoveAlg = -1;
     }
-    invi_timer = 0;
 }
 
 void enemy_deinit()

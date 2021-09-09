@@ -10,17 +10,30 @@ void scrollMap()
 		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
 	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
 		scroll.x = player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X;
-	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y)
-		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y;
-	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y)
-		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y;
+	/*if (STATE(0) & PAD_TRG1)
+	{
+		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y)
+			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y;
 
+	}
+	else
+	{
+		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
+			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
+	}*/
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f;
+
+	//scroll limit
 	if (scroll.x < 0) scroll.x = 0;
 	if (scroll.x > SCREEN_W - SCREEN_W)
 		scroll.x = SCREEN_W - SCREEN_W;
 	if (scroll.y < 0) scroll.y = 0;
 	/*if (scroll.y > WorldHeight - SCREEN_H)
 		scroll.y = WorldHeight - SCREEN_H;*/
+	//TODO:地面が実装された際にスクロールの画面制限を付ける必要あり
 
 }
 

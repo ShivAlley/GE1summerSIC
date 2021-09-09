@@ -7,7 +7,9 @@ void player_render();
 void player_deinit();
 
 bool HitCheck(OBJ2D* player, OBJ2D* enemy);
+void fadeout();
 
 extern OBJ2D player;
+extern VECTOR2 MousePos;
 
 #endif // PLAYER_H

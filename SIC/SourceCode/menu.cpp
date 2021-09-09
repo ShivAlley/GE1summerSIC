@@ -37,8 +37,8 @@ void menu_update()
 		}
 		if (TRG(0) & PAD_START)
 		{
-			nextScene = SCENE_GAME;
 			player.area = cursor;
+			nextScene = SCENE_GAME;
 			break;
 		}
 		if (TRG(0) & PAD_RIGHT)cursor++;
@@ -46,11 +46,6 @@ void menu_update()
 		if (cursor < first)cursor = first;
 		if (cursor > fifth)cursor = fifth;
 		debug::setString("cursor%d", cursor);
-		
-
-		
-
-
 	}
 	menu_timer++;
 }
@@ -94,8 +89,10 @@ void menu_render()
 		0,
 		1, 0, 0, 1
 	);
-	if (cursor == first)
+
+	switch (cursor)
 	{
+	case first:
 		primitive::rect(
 			SCREEN_W / 5, SCREEN_H / 2,
 			MAPCHIP_SIZE, MAPCHIP_SIZE,
@@ -103,19 +100,17 @@ void menu_render()
 			0,
 			0, 0, 1, 1
 		);
-	}
-	if (cursor == second)
-	{
+		break;
+	case second:
 		primitive::rect(
-			SCREEN_W / 5*2, SCREEN_H / 2,
+			SCREEN_W / 5 * 2, SCREEN_H / 2,
 			MAPCHIP_SIZE, MAPCHIP_SIZE,
 			MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE,
 			0,
 			0, 0, 1, 1
 		);
-	}
-	if (cursor == third)
-	{
+		break;
+	case third:
 		primitive::rect(
 			SCREEN_W / 5 * 3, SCREEN_H / 2,
 			MAPCHIP_SIZE, MAPCHIP_SIZE,
@@ -123,9 +118,8 @@ void menu_render()
 			0,
 			0, 0, 1, 1
 		);
-	}
-	if (cursor == fourth)
-	{
+		break;
+	case fourth:
 		primitive::rect(
 			SCREEN_W / 5 * 4, SCREEN_H / 2,
 			MAPCHIP_SIZE, MAPCHIP_SIZE,
@@ -133,9 +127,8 @@ void menu_render()
 			0,
 			0, 0, 1, 1
 		);
-	}
-	if (cursor == fifth)
-	{
+		break;
+	case fifth:
 		primitive::rect(
 			SCREEN_W / 5 * 5, SCREEN_H / 2,
 			MAPCHIP_SIZE, MAPCHIP_SIZE,
@@ -143,7 +136,10 @@ void menu_render()
 			0,
 			0, 0, 1, 1
 		);
+		break;
 	}
+
+	
 
 }
 

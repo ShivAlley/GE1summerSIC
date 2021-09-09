@@ -22,7 +22,7 @@ void map_render()
 		ToRadian(0),
 		{ 1, 0, 1, 1 }
 	);*/
-	switch (cursor)
+	switch (player.area)
 	{
 	case 0:
 	{
