@@ -29,7 +29,7 @@ void title_update()
 	case 2:
 		if (TRG(0) & PAD_START) {
 			//title_state = 3;
-			nextScene = SCENE_GAME;
+			nextScene = SCENE_MENU;
 			break;
 		}
 		break;

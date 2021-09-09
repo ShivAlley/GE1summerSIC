@@ -35,10 +35,16 @@ void menu_update()
 			nextScene = SCENE_TITLE;
 			break;
 		}
+		if (TRG(0) & PAD_START)
+		{
+			nextScene = SCENE_GAME;
+			break;
+		}
 		if (TRG(0) & PAD_RIGHT)cursor++;
 		if (TRG(0) & PAD_LEFT)cursor--;
 		if (cursor < first)cursor = first;
 		if (cursor > fifth)cursor = fifth;
+		debug::setString("cursor%d", cursor);
 		
 
 		

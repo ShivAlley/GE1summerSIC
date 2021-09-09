@@ -42,6 +42,7 @@ extern int game_timer;
 extern int menu_timer;
 extern int result_timer;
 extern int score;
+extern int cursor;
 extern VECTOR2 scroll;
 
 
