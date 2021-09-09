@@ -180,7 +180,6 @@ void moveEnemy0(OBJ2D* obj)
         /*プレイヤーのY座標と敵のY座標の差がSCREENHの半分ぐらいになったら
             自機に向かって直線で向かってくる敵の動き
             SinfとCosf関数を使えばできそうな気がする*/
-
         break;
     }
 }
