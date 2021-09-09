@@ -12,6 +12,8 @@ struct OBJ2D
 	VECTOR2 TexPos;
 	VECTOR2 TexSize;
 	VECTOR2 pivot;
+	int state;
+	int area;
 	float angle;
 	VECTOR4 color;
 	int HitPoint;

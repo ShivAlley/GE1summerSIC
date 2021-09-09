@@ -117,46 +117,46 @@ void enemy_render()
 
 }
 
-//void moveEnemy0(OBJ2D* obj)
-//{
-//    switch (obj->state)
-//    {
-//    case 0:
-//        obj->scale = { 0.5f, 0.5f };
-//        obj->spr = EnemyData[0].spr;
-//        obj->TexPos = EnemyData[0].texPos;
-//        obj->TexSize = EnemyData[0].texSize;
-//        obj->pivot = EnemyData[0].pivot;
-//        obj->HalfSize.y = MAPCHIP_SIZE;
-//        obj->HalfSize.x = MAPCHIP_SIZE;
-//        obj->angle = ToRadian(0);
-//        obj->color.w = 1.0f;
-//
-//        ++obj->state;
-//        //fallthrough
-//    case 1:
-//
-//        enemy_act(obj);
-//
-//        obj->pos.y += obj->speed.y;
-//
-//        obj->speed.y += 1.0f;
-//
-//        
-//
-//        obj->pos.x += obj->speed.x;
-//
-//
-//
-//       
-//
-//
-//        
-//
-//
-//        break;
-//    }
-//}
+void moveEnemy0(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->scale = { 0.5f, 0.5f };
+        obj->spr = EnemyData[0].spr;
+        obj->TexPos = EnemyData[0].texPos;
+        obj->TexSize = EnemyData[0].texSize;
+        obj->pivot = EnemyData[0].pivot;
+        obj->HalfSize.y = MAPCHIP_SIZE;
+        obj->HalfSize.x = MAPCHIP_SIZE;
+        obj->angle = ToRadian(0);
+        obj->color.w = 1.0f;
+
+        ++obj->state;
+        //fallthrough
+    case 1:
+
+        //enemy_act(obj);
+
+        obj->pos.y += obj->speed.y;
+
+        obj->speed.y += 1.0f;
+
+        
+
+        obj->pos.x += obj->speed.x;
+
+
+
+       
+
+
+        
+
+
+        break;
+    }
+}
 
 void enemy_init()
 {
