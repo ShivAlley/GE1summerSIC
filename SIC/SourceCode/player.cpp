@@ -95,6 +95,8 @@ void player_update()
 		player = {};
 		player.pos = { SCREEN_W / 2 , SCREEN_H / 2 };
 		player.HalfSize = { MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE };
+		player.HitPoint = 3;
+		player.color.z = 0;
 		++PlayerState;
 		//fallthrough
 	case 2: 
@@ -106,6 +108,7 @@ void player_update()
 		debug::setString("OnGround%d", player.OnGround);
 		debug::setString("fade%f", fade);
 		debug::setString("speedY%f", player.speed.y);
+		debug::setString("HP%d", player.HitPoint);
 		
 
 		if (player.OnGround)
@@ -119,7 +122,12 @@ void player_update()
 			fade = 0;
 			player.OnGround = false;
 		}
+		if (player.HitPoint == 0)
+		{
+			nextScene = SCENE_RESULT;
 
+		}
+		
 
 	}
 }
@@ -130,7 +138,7 @@ void player_render()
 		player.pos - scroll, player.HalfSize * 2,
 		player.HalfSize,
 		player.angle,
-		{ 1,0,0,1 }
+		{ 1,0,player.color.z,1 }
 	);
 	if (player.OnGround)
 	{
@@ -139,7 +147,7 @@ void player_render()
 			SCREEN_W, SCREEN_H,
 			0, 0,
 			0,
-			1, 1, 1, fade
+			1, 1,1, fade
 		);
 	}
 }
