@@ -83,20 +83,24 @@ bool HitCheck(OBJ2D* player, OBJ2D* enemy)
 
 	return true;
 }
-bool IntoCheck(VECTOR2 mousepos, OBJ2D enemy)
+int EnIntoCheck(VECTOR2 mousepos, OBJ2D enemy[], int EnMax)
 {
+	for (int i = 0; i < EnMax; ++i)
+	{
+		if (enemy[i].MoveAlg == -1) continue;
+		float EnemyLeft =  enemy[i].pos.x - enemy[i].HalfSize.x;
+		float EnemyRight = enemy[i].pos.x + enemy[i].HalfSize.x;
+		float EnemyTop = enemy[i].pos.y - enemy[i].HalfSize.y;
+		float EnemyBott = enemy[i].pos.y + enemy[i].HalfSize.y;
 
-	float EnemyLeft =  enemy.pos.x - enemy.HalfSize.x;
-	float EnemyRight = enemy.pos.x + enemy.HalfSize.x;
-	float EnemyTop =   enemy.pos.y - enemy.HalfSize.y;
-	float EnemyBott =  enemy.pos.y + enemy.HalfSize.y;
+		if (mousepos.x < EnemyLeft) continue;
+		if (mousepos.x > EnemyRight)continue;
+		if (mousepos.y < EnemyTop)  continue;
+		if (mousepos.y > EnemyBott) continue;
 
-	if (mousepos.x < EnemyLeft) return false;
-	if (mousepos.x > EnemyRight) return false;
-	if (mousepos.y < EnemyTop) return false;
-	if (mousepos.y > EnemyBott) return false;
-	
-	return true;
+		return i;
+	}
+	return -1;
 
 }
 
@@ -133,6 +137,7 @@ void player_update()
 		ScreenToClient(window::getHwnd(), &mouse);
 		MousePos.x = mouse.x;
 		MousePos.y = mouse.y;
+		MousePos += scroll;
 
 		if (player.InvincibleTimer > 0)
 			--player.InvincibleTimer;
@@ -152,6 +157,19 @@ void player_update()
 
 		}
 		
+		int EnNo = EnIntoCheck(MousePos, enemy, ENEMY_MAX);
+		switch (EnNo)
+		{
+		case -1:
+			break;
+		default:
+			if (TRG(0) & PAD_L1)
+			{
+				enemy[EnNo].MoveAlg = -1;
+				//HACK:仮の敵消去処理
+			}
+			break;
+		}
 
 	}
 }
