@@ -4,7 +4,6 @@
 int PlayerState;
 float fade;
 int score;
-float MaxSpeed;
 OBJ2D player;
 VECTOR2 scroll;
 
@@ -53,6 +52,26 @@ void player_moveY(OBJ2D* player)
 
 }
 
+bool HitCheck(OBJ2D* player, OBJ2D* enemy)
+{
+	float PlLeft = player->pos.x - player->HalfSize.x + 1;
+	float PlRight = player->pos.x + player->HalfSize.x - 1;
+	float PlTop = player->pos.y - player->HalfSize.y + MAPCHIP_HALFSIZE;
+	float PlBott = player->pos.y + player->HalfSize.y;
+
+	float EnemyLeft = enemy->pos.x - enemy->HalfSize.x;
+	float EnemyRight = enemy->pos.x + enemy->HalfSize.x;
+	float EnemyTop = enemy->pos.y - enemy->HalfSize.y;
+	float EnemyBott = enemy->pos.y + enemy->HalfSize.y;
+
+	if (PlRight < EnemyLeft)return false;
+	if (PlLeft >  EnemyRight)return false;
+	if (PlBott <  EnemyTop)return false;
+	if (PlTop >   EnemyBott)return false;
+
+	return true;
+}
+
 
 
 void player_update()
@@ -68,7 +87,6 @@ void player_update()
 		player = {};
 		player.pos = { SCREEN_W / 2 , SCREEN_H / 2 };
 		player.HalfSize = { MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE };
-		MaxSpeed = MAX_SPEED_Y;
 		++PlayerState;
 		//fallthrough
 	case 2: 
