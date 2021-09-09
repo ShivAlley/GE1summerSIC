@@ -16,7 +16,6 @@ void title_deinit()
 
 void title_update()
 {
-	int choose = 0;
 	switch (title_state)
 	{
 	case 0:
@@ -35,6 +34,7 @@ void title_update()
 		if (TRG(0) & PAD_SELECT)
 		{
 			exit(0);
+			//HACK:‰¼‚ÌI—¹ˆ—
 		}
 		break;
 		/*switch (choose)

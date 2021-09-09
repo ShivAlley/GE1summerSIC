@@ -6,6 +6,8 @@ float fade;
 int score;
 OBJ2D player;
 VECTOR2 scroll;
+VECTOR2 MousePos;
+POINT mouse;
 
 
 void player_moveX(OBJ2D* player)
@@ -62,6 +64,8 @@ void player_moveY(OBJ2D* player)
 
 bool HitCheck(OBJ2D* player, OBJ2D* enemy)
 {
+	if (player->InvincibleTimer)
+		return false;
 	float PlLeft = player->pos.x - player->HalfSize.x + 1;
 	float PlRight = player->pos.x + player->HalfSize.x - 1;
 	float PlTop = player->pos.y - player->HalfSize.y + MAPCHIP_HALFSIZE;
@@ -79,7 +83,22 @@ bool HitCheck(OBJ2D* player, OBJ2D* enemy)
 
 	return true;
 }
+bool IntoCheck(VECTOR2 mousepos, OBJ2D enemy)
+{
 
+	float EnemyLeft =  enemy.pos.x - enemy.HalfSize.x;
+	float EnemyRight = enemy.pos.x + enemy.HalfSize.x;
+	float EnemyTop =   enemy.pos.y - enemy.HalfSize.y;
+	float EnemyBott =  enemy.pos.y + enemy.HalfSize.y;
+
+	if (mousepos.x < EnemyLeft) return false;
+	if (mousepos.x > EnemyRight) return false;
+	if (mousepos.y < EnemyTop) return false;
+	if (mousepos.y > EnemyBott) return false;
+	
+	return true;
+
+}
 
 
 void player_update()
@@ -110,10 +129,15 @@ void player_update()
 		debug::setString("speedY%f", player.speed.y);
 		debug::setString("HP%d", player.HitPoint);
 		
+		GetCursorPos(&mouse);
+		ScreenToClient(window::getHwnd(), &mouse);
+		MousePos.x = mouse.x;
+		MousePos.y = mouse.y;
 
+		if (player.InvincibleTimer > 0)
+			--player.InvincibleTimer;
 		if (player.OnGround)
 		{
-			fade += 0.008f;
 			score = player.pos.y;
 		}
 		if (fade > 1)
@@ -122,7 +146,7 @@ void player_update()
 			fade = 0;
 			player.OnGround = false;
 		}
-		if (player.HitPoint == 0)
+		if (!player.HitPoint)
 		{
 			nextScene = SCENE_RESULT;
 
@@ -142,13 +166,7 @@ void player_render()
 	);
 	if (player.OnGround)
 	{
-		primitive::rect(
-			0, 0,
-			SCREEN_W, SCREEN_H,
-			0, 0,
-			0,
-			1, 1,1, fade
-		);
+		fadeout();
 	}
 }
 
@@ -164,5 +182,12 @@ void player_deinit()
 
 void fadeout()
 {
-	
+	primitive::rect(
+		0, 0,
+		SCREEN_W, SCREEN_H,
+		0, 0,
+		0,
+		1, 1, 1, fade
+	);
+	fade += 0.008f;
 }
