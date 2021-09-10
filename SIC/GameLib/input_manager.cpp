@@ -33,6 +33,7 @@ namespace GameLib
         { PAD_TRG2      , Keyboard::E },            // 'E'
 
         { PAD_TRG3      , Keyboard::C},                    // 'C'
+        { PAD_TRG4      , Keyboard::R },
 
         { PAD_L1        , VK_LBUTTON },        // mouse1
         { PAD_R1        , Keyboard::C },            // 
@@ -40,9 +41,8 @@ namespace GameLib
         { PAD_L3        , Keyboard::D },            // 
 
        // { PAD_START    , VK_LBUTTON },              // マウス左ボタン
-       // { PAD_TRG4     , VK_RBUTTON },              // マウス右ボタン
       //  { PAD_R3       , VK_MBUTTON },              // マウス中ボタン
-
+        // マウス右ボタン VK_RBUTTON
         { 0x00, 0x00 }                              // 終了コード
     };
 
