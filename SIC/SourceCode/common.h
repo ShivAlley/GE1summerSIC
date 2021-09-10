@@ -34,16 +34,17 @@
 //•Ï”‚ÌéŒ¾
 extern int curScene;
 extern int nextScene;
-extern int title_state;
-extern int game_state;
-extern int menu_state;
-extern int result_state;
+extern int TitleState;
+extern int GameState;
+extern int MenuState;
+extern int ResultState;
 extern int EnemyState;
 extern int PlayerState;
-extern int title_timer;
-extern int game_timer;
-extern int menu_timer;
-extern int result_timer;
+extern int CoinState;
+extern int TitleTimer;
+extern int GameTimer;
+extern int MenuTimer;
+extern int ResultTimer;
 extern int score;
 extern int cursor;
 extern VECTOR2 scroll;

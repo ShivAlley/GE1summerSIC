@@ -1,20 +1,20 @@
 #include "all.h"
 
-int result_state;
-int result_timer;
+int ResultState;
+int ResultTimer;
 std::string str;
 
 void result_update()
 {
-	switch (result_state)
+	switch (ResultState)
 	{
 	case 0:
-		result_state++;
+		ResultState++;
 		//fallthrough
 	case 1:
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 		str = std::to_string(score);
-		result_state++;
+		ResultState++;
 		//fallthrough
 	case 2:
 		if (TRG(0) & PAD_TRG1)
@@ -23,7 +23,7 @@ void result_update()
 		}
 		break;
 	}
-	result_timer++;
+	ResultTimer++;
 }
 
 void result_render()
@@ -35,7 +35,8 @@ void result_render()
 
 void result_init()
 {
-
+	ResultState = 0;
+	ResultTimer = 0;
 }
 
 void result_deinit()

@@ -10,52 +10,52 @@ VECTOR2 MousePos;
 POINT mouse;
 
 
-void player_moveX(OBJ2D* player)
+void player_moveX()
 {
-	player->pos.x += player->speed.x;
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
-		player->speed.x += 0.3f;
-		if (TRG(0) & PAD_RIGHT && player->scale.x < 0)
-			player->scale.x *= -1.0f;
+		player.speed.x += 0.3f;
+		if (TRG(0) & PAD_RIGHT && player.scale.x < 0)
+			player.scale.x *= -1.0f;
 	}
 	else if (STATE(0) & PAD_LEFT && !(STATE(0) & PAD_RIGHT)) {
-		player->speed.x -= 0.3f;
-		if (TRG(0) & PAD_LEFT && player->scale.x > 0)
-			player->scale.x *= -1.0f;
+		player.speed.x -= 0.3f;
+		if (TRG(0) & PAD_LEFT && player.scale.x > 0)
+			player.scale.x *= -1.0f;
 	}
-	if (player->pos.x < player->HalfSize.x) {
-		player->pos.x = player->HalfSize.x;
-		player->speed.x = 0;
+	if (player.pos.x < player.HalfSize.x) {
+		player.pos.x = player.HalfSize.x;
+		player.speed.x = 0;
 	}
-	if (player->pos.x > SCREEN_W - player->HalfSize.x) {
-		player->pos.x = SCREEN_W - player->HalfSize.x;
-		player->speed.x = 0;
+	if (player.pos.x > SCREEN_W - player.HalfSize.x) {
+		player.pos.x = SCREEN_W - player.HalfSize.x;
+		player.speed.x = 0;
 	}
 
-	player->speed.x *= 0.98f;
+	player.speed.x *= 0.98f;
+	player.pos.x += player.speed.x;
 }
-void player_moveY(OBJ2D* player)
+void player_moveY()
 {
-	player->pos.y += player->speed.y;
-	player->speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
+	if (!(STATE(0) & PAD_TRG1) && player.speed.y > (MAX_SPEED_Y + GRAVITY) / 4)
+		player.speed.y -= GRAVITY * 2; //ブレーキの加減
+	if (player.speed.y > MAX_SPEED_Y)
+		player.speed.y = MAX_SPEED_Y;
+	player.speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
 	
-	if (!(STATE(0) & PAD_TRG1) && player->speed.y > (MAX_SPEED_Y + GRAVITY) / 4)
-		player->speed.y -= GRAVITY * 2; //ブレーキの加減
-	if (player->speed.y > MAX_SPEED_Y)
-		player->speed.y = MAX_SPEED_Y;
 
 	//HACK:暫定的な地面の実装のため改修が必要
-	if (player->pos.y > SCREEN_H * 42/*masicNumber*/)
+	if (player.pos.y > SCREEN_H * 42/*masicNumber*/)
 	{		  
-		player->pos.y = SCREEN_H * 42;
-		player->speed.y = 0.0f;
-		player->OnGround = true;
+		player.pos.y = SCREEN_H * 42;
+		player.speed.y = 0.0f;
+		player.OnGround = true;
 	}
 
+	player.pos.y += player.speed.y;
 #if _DEBUG
 	if (STATE(0) & PAD_UP)
 	{
-		player->speed.y -= GRAVITY * 4;
+		player.speed.y -= GRAVITY * 4;
 	}
 #endif // _DEBUG
 
@@ -116,8 +116,8 @@ void player_update()
 	case 1:
 		//パラメータの設定
 		player = {};
-		player.pos = { SCREEN_W / 2 , SCREEN_H / 2 };
-		player.HalfSize = { MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE };
+		player.pos = VECTOR2(0, SCREEN_W / 2);
+		player.HalfSize = VECTOR2(MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE);
 		player.HitPoint = 3;
 		player.color.z = 0;
 		player.area = cursor;
@@ -125,8 +125,8 @@ void player_update()
 		//fallthrough
 	case 2: 
 		//loop
-		player_moveX(&player);
-		player_moveY(&player);
+		player_moveX();
+		player_moveY();
 		debug::setString("posx%f", player.pos.x);
 		debug::setString("posy%f", player.pos.y);
 		debug::setString("OnGround%d", player.OnGround);
@@ -196,6 +196,7 @@ void player_render()
 
 void player_init()
 {
+	PlayerState = 0;
 	fade = 0;
 }
 

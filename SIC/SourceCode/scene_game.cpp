@@ -1,7 +1,7 @@
 #include "all.h"
 
-int game_state;
-int game_timer;
+int GameState;
+int GameTimer;
 
 void scrollMap()
 {
@@ -39,30 +39,32 @@ void scrollMap()
 
 void game_init()
 {
-	game_state = 0;
-	game_timer = 0;
+	GameState = 0;
+	GameTimer = 0;
 	srand((unsigned int)time(NULL));
 }
 void game_deinit()
 {
-	
+	enemy_deinit();
+	player_deinit();
+	coin_deinit();
 	
 }
 void game_update()
 {
 
-	switch (game_state)
+	switch (GameState)
 	{
 	case 0:
 		//‰Šúİ’è
 		
-		game_state++;
+		GameState++;
 		/*fallthrough*/
 	case 1:
 		//ƒpƒ‰ƒ[ƒ^‚Ìİ’è
 		
 		setBlendMode(Blender::BS_ALPHA);
-		game_state++;
+		GameState++;
 		/*fallthrough*/
 	case 2:
 		//’Êí
@@ -73,11 +75,12 @@ void game_update()
 		}
 
 		player_update();
-		enemy_update();
 		map_update();
+		enemy_update();
+		coin_update();
 		scrollMap();
 
-		game_timer++;
+		GameTimer++;
 		
 		
 	}
@@ -87,6 +90,7 @@ void game_render()
 	GameLib::clear(0, 0, 0);
 	map_render();
 	enemy_render();
+	coin_render();
 	player_render();
 	
 
@@ -94,7 +98,7 @@ void game_render()
 
 void game_reset()
 {
-	game_state = 1;
+	GameState = 1;
 	PlayerState = 1;
 	EnemyState = 1;
 }

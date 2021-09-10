@@ -1,12 +1,12 @@
 #include "all.h"
-int title_state;
-int title_timer;
+int TitleState;
+int TitleTimer;
 
 
 void title_init()
 {
-	title_state = 0;
-	title_timer = 0;
+	TitleState = 0;
+	TitleTimer = 0;
 }
 
 void title_deinit()
@@ -16,11 +16,11 @@ void title_deinit()
 
 void title_update()
 {
-	switch (title_state)
+	switch (TitleState)
 	{
 	case 0:
 		
-		title_state++;
+		TitleState++;
 		/*fallthrough*/
 	case 1:
 		GameLib::setBlendMode(Blender::BS_ALPHA);
@@ -46,7 +46,7 @@ void title_update()
 		}*/
 
 	}
-	title_timer++;
+	TitleTimer++;
 }
 
 void title_render()

@@ -1,7 +1,7 @@
 #include "all.h"
 
-int menu_state;
-int menu_timer;
+int MenuState;
+int MenuTimer;
 
 int cursor;
 
@@ -18,16 +18,16 @@ void menu_update()
 {
 
 
-	switch (menu_state)
+	switch (MenuState)
 	{
 	case 0:
 
-		menu_state++;
+		MenuState++;
 		//fallthrough
 	case 1:
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
-		menu_state++;
+		MenuState++;
 		//fallthrough
 	case 2:
 		if (TRG(0) & PAD_SELECT)
@@ -47,7 +47,7 @@ void menu_update()
 		if (cursor > fifth)cursor = fifth;
 		debug::setString("cursor%d", cursor);
 	}
-	menu_timer++;
+	MenuTimer++;
 }
 
 void menu_render()
@@ -145,8 +145,8 @@ void menu_render()
 
 void menu_init()
 {
-	menu_state = 0;
-	menu_timer = 0;
+	MenuState = 0;
+	MenuTimer = 0;
 	cursor = 0;
 }
 

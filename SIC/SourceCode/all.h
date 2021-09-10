@@ -19,6 +19,7 @@
 #include "map.h"
 #include "audio.h"
 #include "result.h"
+#include "coin.h"
 
 
 
