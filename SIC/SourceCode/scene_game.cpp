@@ -92,3 +92,10 @@ void game_render()
 
 }
 
+void game_reset()
+{
+	game_state = 1;
+	PlayerState = 1;
+	EnemyState = 1;
+}
+
