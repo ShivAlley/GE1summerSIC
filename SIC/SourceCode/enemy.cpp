@@ -177,9 +177,9 @@ void moveEnemy0(OBJ2D* obj)
             player.color.z += 0.33f;
         }
         //TODO:from shibutani
-        /*ƒvƒŒƒCƒ„[‚ÌYÀ•W‚Æ“G‚ÌYÀ•W‚Ì·‚ªSCREENH‚Ì”¼•ª‚®‚ç‚¢‚É‚È‚Á‚½‚ç
-            Ž©‹@‚ÉŒü‚©‚Á‚Ä’¼ü‚ÅŒü‚©‚Á‚Ä‚­‚é“G‚Ì“®‚«
-            Sinf‚ÆCosfŠÖ”‚ðŽg‚¦‚Î‚Å‚«‚»‚¤‚È‹C‚ª‚·‚é*/
+        /*ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®Yåº§æ¨™ã¨æ•µã®Yåº§æ¨™ã®å·®ãŒSCREENHã®åŠåˆ†ãã‚‰ã„ã«ãªã£ãŸã‚‰
+            è‡ªæ©Ÿã«å‘ã‹ã£ã¦ç›´ç·šã§å‘ã‹ã£ã¦ãã‚‹æ•µã®å‹•ã
+            Sinfã¨Cosfé–¢æ•°ã‚’ä½¿ãˆã°ã§ããã†ãªæ°—ãŒã™ã‚‹*/
         break;
     }
 }
@@ -204,11 +204,14 @@ void moveEnemy1(OBJ2D* obj)
             float dist = sqrtf(dx * dx + dy * dy);
             obj->speed = { dx / dist * 8,dy / dist * 8 };
         }
-        if((obj->pos.y-player.pos.y)<SCREEN_H)++obj->state;
+
+        if ((obj->pos.y - player.pos.y) < SCREEN_H)++obj->state;
+
         //fallthrough
     case 1:
 
         //enemy_act(obj);
+
         if ((obj->pos.y - player.pos.y) < SCREEN_H)obj->pos += obj->speed;
         
         if (HitCheck(&player, obj))
