@@ -33,7 +33,7 @@ namespace GameLib
         { PAD_TRG2      , Keyboard::E },            // 'E'
 
         { PAD_TRG3      , Keyboard::C},                    // 'C'
-        { PAD_TRG4      , Keyboard::R },
+        { PAD_TRG4       , Keyboard::R },
 
         { PAD_L1        , VK_LBUTTON },        // mouse1
         { PAD_R1        , Keyboard::C },            // 
