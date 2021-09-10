@@ -153,9 +153,14 @@ void player_update()
 		}
 		if (!player.HitPoint)
 		{
-			nextScene = SCENE_RESULT;
+			game_reset();
 
 		}
+#if _DEBUG
+		if (TRG(0) & PAD_TRG4)game_reset();
+#endif;
+		
+
 		
 		int EnNo = EnIntoCheck(MousePos, enemy, ENEMY_MAX);
 		switch (EnNo)
