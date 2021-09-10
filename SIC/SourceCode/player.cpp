@@ -120,6 +120,7 @@ void player_update()
 		player.HalfSize = { MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE };
 		player.HitPoint = 3;
 		player.color.z = 0;
+		player.area = cursor;
 		++PlayerState;
 		//fallthrough
 	case 2: 
