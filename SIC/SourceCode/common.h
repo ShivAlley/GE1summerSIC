@@ -38,6 +38,8 @@ extern int title_state;
 extern int game_state;
 extern int menu_state;
 extern int result_state;
+extern int EnemyState;
+extern int PlayerState;
 extern int title_timer;
 extern int game_timer;
 extern int menu_timer;

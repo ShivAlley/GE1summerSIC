@@ -1,7 +1,6 @@
 #include "all.h"
 
 int EnemyState;
-int invi_timer;
 
 struct ENEMY_DATA {
     Sprite* spr;
@@ -30,6 +29,8 @@ ENEMY_SET enemySet[] =
 {
     {0,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
     {0,1,VECTOR2(SCREEN_W / 3, SCREEN_H * 3)},
+    {1,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
+    {1,1,VECTOR2(SCREEN_W, SCREEN_H * 3)},
     {-1,-1,{}},
 
 };
@@ -176,10 +177,7 @@ void moveEnemy0(OBJ2D* obj)
             player.InvincibleTimer = INVINCIBLE_TIMER;
             player.color.z += 0.33f;
         }
-        //TODO:from shibutani
-        /*プレイヤーのY座標と敵のY座標の差がSCREENHの半分ぐらいになったら
-            自機に向かって直線で向かってくる敵の動き
-            SinfとCosf関数を使えばできそうな気がする*/
+        
         break;
     }
 }
