@@ -2,6 +2,7 @@
 
 int GameState;
 int GameTimer;
+float ScrollMerginY = SCROLL_MERGIN_Y;
 
 void scrollMap()
 {
@@ -21,10 +22,23 @@ void scrollMap()
 		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
 			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
 	}*/
+	if (STATE(0) & PAD_TRG1)
+	{
+		ScrollMerginY -= ScrollMerginY / 2 / 240;
+		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY)
+			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY;
+
+	}
+	else
+	{
+		ScrollMerginY += ScrollMerginY / 2 / 240;
+		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY)
+			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY;
+	}
 	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
-		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
+		ScrollMerginY = SCROLL_MERGIN_Y * 1.5f;
 	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f)
-		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f;
+		ScrollMerginY = SCROLL_MERGIN_Y * 0.1f;
 
 	//scroll limit
 	if (scroll.x < 0) scroll.x = 0;

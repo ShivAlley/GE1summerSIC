@@ -36,11 +36,11 @@ void player_moveX()
 }
 void player_moveY()
 {
-	if (!(STATE(0) & PAD_TRG1) && player.speed.y > (MAX_SPEED_Y + GRAVITY) / 4)
+	player.speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
+	if (!(STATE(0) & PAD_TRG1) && player.speed.y > MAX_SPEED_Y / 4)
 		player.speed.y -= GRAVITY * 2; //ブレーキの加減
 	if (player.speed.y > MAX_SPEED_Y)
 		player.speed.y = MAX_SPEED_Y;
-	player.speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
 	
 
 	//HACK:暫定的な地面の実装のため改修が必要
