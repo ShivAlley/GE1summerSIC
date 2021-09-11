@@ -2,11 +2,34 @@
 
 int GameState;
 int GameTimer;
-float ScrollMerginY = SCROLL_MERGIN_Y;
+float ScrollMerginY = 0;
 
 void scrollMap()
 {
 
+	if (scroll.x < player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X)
+		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
+	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
+		scroll.x = player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X;
+	if (STATE(0) & PAD_TRG1)
+	{
+		ScrollMerginY += GRAVITY * 10;
+		if (ScrollMerginY > SCROLL_MERGIN_Y / 2) // SCROLL_MERGIN_Y / 2 === SCROLL_MERGIN_Y * 1.5f - SCROLL_MERGIN_Y
+			ScrollMerginY = SCROLL_MERGIN_Y / 2;
+	}
+	else
+	{
+		ScrollMerginY -= GRAVITY * 10;
+		if (ScrollMerginY < 0)
+			ScrollMerginY = 0;
+	}
+	
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f - ScrollMerginY) //HACK:need balancing 1.5f ~ 1.7f
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f - ScrollMerginY;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f;
+
+#if 0 // backup
 	if (scroll.x < player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X)
 		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
 	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
@@ -22,24 +45,12 @@ void scrollMap()
 		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
 			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
 	}*/
-	if (STATE(0) & PAD_TRG1)
-	{
-		ScrollMerginY -= ScrollMerginY / 2 / 240;
-		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY)
-			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY;
 
-	}
-	else
-	{
-		ScrollMerginY += ScrollMerginY / 2 / 240;
-		if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY)
-			scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + ScrollMerginY;
-	}
 	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f)
-		ScrollMerginY = SCROLL_MERGIN_Y * 1.5f;
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f;
 	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f)
-		ScrollMerginY = SCROLL_MERGIN_Y * 0.1f;
-
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f;
+#endif
 	//scroll limit
 	if (scroll.x < 0) scroll.x = 0;
 	if (scroll.x > SCREEN_W - SCREEN_W)
@@ -93,6 +104,7 @@ void game_update()
 		enemy_update();
 		coin_update();
 		scrollMap();
+		debug::setString("scrollY %f", scroll.y);
 
 		GameTimer++;
 		

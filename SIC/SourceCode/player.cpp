@@ -34,6 +34,9 @@ void player_moveX()
 	player.speed.x *= 0.98f;
 	player.pos.x += player.speed.x;
 }
+
+
+
 void player_moveY()
 {
 	player.speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
