@@ -128,5 +128,7 @@ void game_reset()
 	PlayerState = 1;
 	EnemyState = 1;
 	
+	
+	
 }
 
