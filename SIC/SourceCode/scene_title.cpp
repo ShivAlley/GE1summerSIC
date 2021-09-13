@@ -3,10 +3,12 @@ int TitleState;
 int TitleTimer;
 
 
+
 void title_init()
 {
 	TitleState = 0;
 	TitleTimer = 0;
+	
 }
 
 void title_deinit()
