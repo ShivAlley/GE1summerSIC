@@ -273,7 +273,7 @@ void moveEnemy2(OBJ2D* obj)
         if (HitCheck(&player, obj))
         {
             player.speed.x += 1;
-            player.speed.y -= GRAVITY* player.speed.y;
+            player.speed.y -=player.speed.y*GRAVITY;
         }
     }//case1block
         
@@ -311,7 +311,7 @@ void moveEnemy3(OBJ2D* obj)
         if (HitCheck(&player, obj))
         {
             player.speed.x -= 1;
-            player.speed.y -= GRAVITY * player.speed.y;
+            player.speed.y -= GRAVITY*player.speed.y;
         }
     }//case1block
 
