@@ -15,6 +15,10 @@
 #define JUMP_POWER -15.0f * 2
 #define INVINCIBLE_TIMER 180
 
+#if _DEBUG
+#define TEMP_MASICNUMBER 42
+#endif
+
 
 //‰æ–Ê‚Ì‘å‚«‚³
 #define SCREEN_W 1280

@@ -47,9 +47,9 @@ void player_moveY()
 	
 
 	//HACK:暫定的な地面の実装のため改修が必要
-	if (player.pos.y > SCREEN_H * 42/*masicNumber*/)
+	if (player.pos.y > SCREEN_H * TEMP_MASICNUMBER)
 	{		  
-		player.pos.y = SCREEN_H * 42;
+		player.pos.y = SCREEN_H * TEMP_MASICNUMBER;
 		player.speed.y = 0.0f;
 		player.OnGround = true;
 	}
@@ -143,41 +143,37 @@ void player_update()
 		MousePos.y = mouse.y;
 		MousePos += scroll;
 
+
 		if (player.InvincibleTimer > 0)
 			--player.InvincibleTimer;
 		if (player.OnGround)
-		{
-			score = player.pos.y;
-		}
+			CalcResult();
 		if (fade > 1)
 		{
-			nextScene = SCENE_RESULT;
+			CalcResult();
 			fade = 0;
 			player.OnGround = false;
 		}
 		if (!player.HitPoint)
 		{
 			game_reset();
-
 		}
 #if _DEBUG
 		if (TRG(0) & PAD_TRG4)game_reset();
-#endif;
+#endif
 		
 
 		
 		int EnNo = EnIntoCheck(MousePos, enemy, ENEMY_MAX);
-		switch (EnNo)
-		{
-		case -1:
+		if (EnNo == -1)
 			break;
-		default:
+		else
+		{
 			if (TRG(0) & PAD_L1)
 			{
 				enemy[EnNo].MoveAlg = -1;
 				//HACK:仮の敵消去処理
 			}
-			break;
 		}
 
 	}
@@ -218,4 +214,11 @@ void fadeout()
 		1, 1, 1, fade
 	);
 	fade += 0.008f;
+}
+
+void CalcResult()
+{
+	score = player.pos.y;
+	nextScene = SCENE_RESULT;
+	//HACK:暫定的なスコア計算
 }

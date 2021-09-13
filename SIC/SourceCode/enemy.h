@@ -28,6 +28,7 @@ extern OBJ2D enemy[ENEMY_MAX];
 void moveEnemy0(OBJ2D* obj);
 void moveEnemy1(OBJ2D* obj);
 void moveEnemy2(OBJ2D* obj);
+void moveEnemy3(OBJ2D* obj);
 
 
 #endif // ENEMY_H

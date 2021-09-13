@@ -192,8 +192,12 @@ void moveEnemy1(OBJ2D* obj)
         
         
 
-        if (obj->pos.y - player.pos.y < SCREEN_H / 2 )++obj->state;
-
+        if (obj->pos.y - player.pos.y < SCREEN_H)
+            ++obj->state;
+        else
+        {
+            break;
+        }
         //fallthrough
     }
     case 1:
@@ -209,11 +213,14 @@ void moveEnemy1(OBJ2D* obj)
         float dx = player.pos.x - obj->pos.x;
         float dy = player.pos.y + player.speed.y * 16 - obj->pos.y;
         float dist = sqrtf(dx * dx + dy * dy);
-        obj->speed = { dx / dist * 5,dy / dist * 5 };
-        if (obj->pos.y - player.pos.y <= SCREEN_H)
+        obj->speed = { dx / dist * 6,dy / dist * 6 };
+        obj->pos += obj->speed;
+        if (obj->pos.y < player.pos.y)
             ++obj->state;
-        
-        break;
+        else
+        {
+            break;
+        }
     }//case1block
     case 2:
     {
@@ -226,13 +233,13 @@ void moveEnemy1(OBJ2D* obj)
             player.color.z += 0.33f;
         }
         
-        obj->pos += obj->speed;
         
-    break;
+        break;
         
     }//case2block
     
     }
+    debug::setString("state%d", obj->state);
     return;
 }
 
@@ -262,8 +269,7 @@ void moveEnemy2(OBJ2D* obj)
 
         //enemy_act(obj);
 
-        //TODO:from shibutani
-        //当たると風に押し返されるような動き
+        
         if (HitCheck(&player, obj))
         {
             player.speed.x += 1;
@@ -301,8 +307,7 @@ void moveEnemy3(OBJ2D* obj)
 
         //enemy_act(obj);
 
-        //TODO:from shibutani
-        //当たると風に押し返されるような動き
+        
         if (HitCheck(&player, obj))
         {
             player.speed.x -= 1;

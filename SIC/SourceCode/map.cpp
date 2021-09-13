@@ -26,7 +26,7 @@ void map_render()
 	{
 	case 0:
 	{
-		for (int i = 0; i < 42/*magicNumber*/; ++i)
+		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
 		{
 			if (i % 2)
 			{
@@ -54,7 +54,7 @@ void map_render()
 	}
 	case 1:
 	{
-		for (int i = 0; i < 42/*magicNumber*/; ++i)
+		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
 		{
 			if (i % 2)
 			{
@@ -82,7 +82,7 @@ void map_render()
 	}
 	case 2:
 	{
-		for (int i = 0; i < 42/*magicNumber*/; ++i)
+		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
 		{
 			if (i % 2)
 			{
@@ -111,7 +111,7 @@ void map_render()
 	}
 	case 3:
 	{
-		for (int i = 0; i < 42/*magicNumber*/; ++i)
+		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
 		{
 			if (i % 2)
 			{
@@ -140,7 +140,7 @@ void map_render()
 	}
 	case 4:
 	{
-		for (int i = 0; i < 42/*magicNumber*/; ++i)
+		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
 		{
 			if (i % 2)
 			{
