@@ -17,7 +17,7 @@ OBJ2D enemy[ENEMY_MAX];
 ENEMY_SET enemySet[] =
 {
     {0,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
-    //{0,1,VECTOR2(SCREEN_W / 3, SCREEN_H * 3)},
+    {0,1,VECTOR2(SCREEN_W / 3, SCREEN_H * 3)},
     {1,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
     {1,1,VECTOR2(SCREEN_W, SCREEN_H * 3)},
     {0,2,VECTOR2(SCREEN_W / 3, SCREEN_H * 2)},
@@ -92,7 +92,7 @@ void enemy_update()
             case 0:moveEnemy0(&enemy[i]); break;
             case 1:moveEnemy1(&enemy[i]); break;
             case 2:moveEnemy2(&enemy[i]); break;
-            //case 3:moveEnemy3(&enemy[i]); break;
+            case 3:moveEnemy3(&enemy[i]); break;
             default: break;
             }
             ++enemy[i].timer;
@@ -199,19 +199,18 @@ void moveEnemy1(OBJ2D* obj)
     case 1:
     {
         //enemy_act(obj);
-        obj->pos += obj->speed;
-        float dx = player.pos.x - obj->pos.x;
-        float dy = player.pos.y + player.speed.y * 16 - obj->pos.y;
-        float dist = sqrtf(dx * dx + dy * dy);
-        obj->speed = { dx / dist * 5,dy / dist * 5 };
+        
         if (HitCheck(&player, obj))
         {
             player.HitPoint--;
             player.InvincibleTimer = INVINCIBLE_TIMER;
             player.color.z += 0.33f;
         }
-
-        if (obj->pos.y - player.pos.y <= 0)
+        float dx = player.pos.x - obj->pos.x;
+        float dy = player.pos.y + player.speed.y * 16 - obj->pos.y;
+        float dist = sqrtf(dx * dx + dy * dy);
+        obj->speed = { dx / dist * 5,dy / dist * 5 };
+        if (obj->pos.y - player.pos.y <= SCREEN_H)
             ++obj->state;
         
         break;
@@ -226,7 +225,9 @@ void moveEnemy1(OBJ2D* obj)
             player.InvincibleTimer = INVINCIBLE_TIMER;
             player.color.z += 0.33f;
         }
-
+        
+        obj->pos += obj->speed;
+        
     break;
         
     }//case2block
@@ -263,13 +264,55 @@ void moveEnemy2(OBJ2D* obj)
 
         //TODO:from shibutani
         //当たると風に押し返されるような動き
-
+        if (HitCheck(&player, obj))
+        {
+            player.speed.x += 1;
+            player.speed.y -= GRAVITY* player.speed.y;
+        }
     }//case1block
         
     }
     return;
 }
 
+void moveEnemy3(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+    {
+
+        obj->scale = { 1.0f, 1.0f };
+        obj->spr = EnemyData[0].spr;
+        obj->TexPos = EnemyData[0].texPos;
+        obj->TexSize = EnemyData[0].texSize;
+        obj->pivot = EnemyData[0].pivot;
+        obj->HalfSize.y = MAPCHIP_SIZE * 2;
+        obj->HalfSize.x = MAPCHIP_SIZE * 2;
+        obj->angle = ToRadian(0);
+        obj->speed.x = 1.0f;
+        obj->color.w = 1.0f;
+
+        ++obj->state;
+        //fallthrough
+    }
+    case 1:
+    {
+
+        //enemy_act(obj);
+
+        //TODO:from shibutani
+        //当たると風に押し返されるような動き
+        if (HitCheck(&player, obj))
+        {
+            player.speed.x -= 1;
+            player.speed.y -= GRAVITY * player.speed.y;
+        }
+    }//case1block
+
+    }
+    return;
+}
 void enemy_init()
 {
     EnemyState = 0;
