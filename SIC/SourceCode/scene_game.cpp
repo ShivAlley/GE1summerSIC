@@ -118,6 +118,7 @@ void game_render()
 	enemy_render();
 	coin_render();
 	player_render();
+	scrollBar();
 	
 
 }
@@ -130,3 +131,30 @@ void game_reset()
 	ResultState = 1;
 }
 
+void scrollBar()
+{
+	//BarposY=プレイヤーY座標÷(終点の座標÷(スクリーンの一番下-棒の幅))
+	float BarposY = player.pos.y /45.0f;
+	primitive::rect(
+		{ 1260,BarposY },
+		{ 20,5 },
+		{ 0,0 },
+		ToRadian(0),
+		{ 1, 1, 1, 1 }
+
+	);
+	primitive::rect(
+		{ 1275,14.2f },
+		{ 5,5 },
+		{ 0,0 },
+		ToRadian(0),
+		{ 0, 0, 1, 1 }
+	);
+	primitive::rect(
+		{ 1275,672 },
+		{ 5,5 },
+		{ 0,0 },
+		ToRadian(0),
+		{ 1, 0, 0, 1 }
+	);
+}
