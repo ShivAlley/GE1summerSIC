@@ -9,7 +9,7 @@ void game_render();
 
 void game_reset();
 
-void scrollBar();
+void scrollBar(VECTOR2 scroll);
 
 
 #endif

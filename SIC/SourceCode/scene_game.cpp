@@ -120,7 +120,7 @@ void game_render()
 	enemy_render();
 	coin_render();
 	player_render();
-	scrollBar();
+	scrollBar(scroll);
 	
 
 }
@@ -139,13 +139,22 @@ void game_reset()
 	}
 	
 }
-
-void scrollBar()
+void scrollBar(VECTOR2 scroll)
 {
+	int margin = 120;
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 0)
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 0;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0;
+
+	scroll.y /= SCREEN_H * TEMP_MASICNUMBER / (SCREEN_H - margin);
+
+
+
 	//BarposY=プレイヤーY座標÷(終点の座標÷(スクリーンの一番下-棒の幅))
 	float BarposY = player.pos.y /45.0f;
 	primitive::rect(
-		{ 1260,BarposY },
+		{ 1260,margin + scroll.y },
 		{ 20,5 },
 		{ 0,0 },
 		ToRadian(0),
