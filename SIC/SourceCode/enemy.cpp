@@ -83,6 +83,9 @@ void enemy_update()
     }
     case 2:
     {
+        
+        if (forcereset)
+            game_reset();
 
         for (int i = 0; i < ENEMY_MAX; ++i)
         {

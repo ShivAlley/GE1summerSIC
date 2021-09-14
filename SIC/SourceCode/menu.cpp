@@ -21,7 +21,6 @@ void menu_update()
 	switch (MenuState)
 	{
 	case 0:
-
 		MenuState++;
 		//fallthrough
 	case 1:

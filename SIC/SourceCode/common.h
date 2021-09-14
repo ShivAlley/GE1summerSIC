@@ -52,6 +52,7 @@ extern int ResultTimer;
 extern int score;
 extern int cursor;
 extern VECTOR2 scroll;
+extern bool forcereset;
 
 
 

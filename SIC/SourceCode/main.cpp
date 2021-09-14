@@ -12,7 +12,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 	GameLib::init(L"DropAction", SCREEN_W, SCREEN_H);
 	//6:ゲームループ
 
-	while (GameLib::gameLoop())
+	while (GameLib::gameLoop(true))
 	{
 		//シーン切り替え処理
 		if (curScene != nextScene)
