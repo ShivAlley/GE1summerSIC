@@ -21,6 +21,7 @@ ENEMY_SET enemySet[] =
     {1,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
     {1,1,VECTOR2(SCREEN_W, SCREEN_H * 3)},
     {0,2,VECTOR2(SCREEN_W / 3, SCREEN_H * 2)},
+
     {-1,-1,{}},
 
 };
@@ -82,6 +83,9 @@ void enemy_update()
     }
     case 2:
     {
+        
+        if (forcereset)
+            game_reset();
 
         for (int i = 0; i < ENEMY_MAX; ++i)
         {

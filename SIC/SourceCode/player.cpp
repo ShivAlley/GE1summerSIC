@@ -1,6 +1,7 @@
 #include "all.h"
 
 
+
 int PlayerState;
 float fade;
 int score;
@@ -10,16 +11,18 @@ VECTOR2 MousePos;
 POINT mouse;
 
 
+
+
 void player_moveX()
 {
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
 		player.speed.x += 0.3f;
-		if (TRG(0) & PAD_RIGHT && player.scale.x < 0)
+		if (STATE(0) & PAD_RIGHT && player.scale.x < 0)
 			player.scale.x *= -1.0f;
 	}
 	else if (STATE(0) & PAD_LEFT && !(STATE(0) & PAD_RIGHT)) {
 		player.speed.x -= 0.3f;
-		if (TRG(0) & PAD_LEFT && player.scale.x > 0)
+		if (STATE(0) & PAD_LEFT && player.scale.x > 0)
 			player.scale.x *= -1.0f;
 	}
 	if (player.pos.x < player.HalfSize.x) {
@@ -60,6 +63,8 @@ void player_moveY()
 	{
 		player.speed.y -= GRAVITY * 4;
 	}
+
+
 #endif // _DEBUG
 
 
@@ -160,6 +165,12 @@ void player_update()
 		}
 #if _DEBUG
 		if (TRG(0) & PAD_TRG4)game_reset();
+		if (TRG(0) & PAD_L3) OutEnSetText(0);
+		if (TRG(0) & PAD_R1) OutEnSetText(1);
+		if (TRG(0) & PAD_R2) OutEnSetText(2);
+		if (TRG(0) & PAD_R3) OutEnSetText(3);
+		if (TRG(0) & PAD_TRG3) OutEnSetText(4);
+		
 #endif
 		
 
@@ -191,6 +202,7 @@ void player_render()
 	{
 		fadeout();
 	}
+	
 }
 
 void player_init()
@@ -201,6 +213,44 @@ void player_init()
 
 void player_deinit()
 {
+
+}
+
+void OutEnSetText(int EnType)
+{
+	using namespace std;
+	const wchar_t* EnSetPos = L"Enpos.txt";
+	//const wchar_t* EnSetPos = L"Coinpos.txt";
+	//HACK目印アノテーション
+	ofstream ofs;
+	ofs.open(EnSetPos, ios::app);
+	if (!EnSetPos)
+		return;
+	switch (EnType)
+	{
+	case 0://往復する敵 もしくはコイン
+		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
+			<< player.pos.x << "," << player.pos.y << "))}," << endl;
+		break;
+	case 1://プレイヤーに突撃する敵
+		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
+			<< player.pos.x << "," << player.pos.y << "))}," << endl;
+		break;
+	case 2://右に飛ばされる風
+		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
+			<< player.pos.x << "," << player.pos.y << "))}," << endl;
+		break;
+	case 3://左に飛ばされる風
+		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
+			<< player.pos.x << "," << player.pos.y << "))}," << endl;
+		break;
+	case 4://静止している敵
+		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
+			<< player.pos.x << "," << player.pos.y << "))}," << endl;
+		break;
+	}
+	ofs.close();
+	return;
 
 }
 

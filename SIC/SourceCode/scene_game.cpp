@@ -3,6 +3,7 @@
 int GameState;
 int GameTimer;
 float ScrollMerginY = 0;
+bool forcereset = false;
 
 void scrollMap()
 {
@@ -84,6 +85,7 @@ void game_update()
 		//‰Šúİ’è
 		
 		GameState++;
+		
 		/*fallthrough*/
 	case 1:
 		//ƒpƒ‰ƒ[ƒ^‚Ìİ’è
@@ -99,7 +101,7 @@ void game_update()
 			break;
 		}
 
-		player_update();
+		player_update();  
 		map_update();
 		enemy_update();
 		coin_update();
@@ -128,5 +130,12 @@ void game_reset()
 	PlayerState = 1;
 	EnemyState = 1;
 	ResultState = 1;
+	forcereset = false;
+	for (int i = 0; i < ENEMY_MAX; ++i)
+	{
+		if (enemy[i].state != 0)
+			forcereset = true;
+	}
+	
 }
 

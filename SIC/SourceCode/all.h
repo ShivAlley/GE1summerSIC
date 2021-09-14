@@ -3,6 +3,7 @@
 #define ALL_H
 //システムやライブラリのヘッダーは上のほうへ
 #include "../GameLib/game_lib.h"
+#include <fstream>
 
 //共通で使われるヘッダー
 #include "common.h"

@@ -32,16 +32,16 @@ namespace GameLib
         { PAD_TRG1      , Keyboard::Space },            // VK_SPACE
         { PAD_TRG2      , Keyboard::E },            // 'E'
 
-        { PAD_TRG3      , Keyboard::C},                    // 'C'
+        { PAD_TRG3      , Keyboard::D4 },                    // '4'
         { PAD_TRG4       , Keyboard::R },
 
         { PAD_L1        , VK_LBUTTON },        // mouse1
-        { PAD_R1        , Keyboard::C },            // 
-        { PAD_R2        , Keyboard::S },            // 
-        { PAD_L3        , Keyboard::D },            // 
+        { PAD_L3        , Keyboard::D0 },            // 
+        { PAD_R1        , Keyboard::D1 },            // 
+        { PAD_R2        , Keyboard::D2 },            // 
+        { PAD_R3        , Keyboard::D3 },              // マウス中ボタン
 
        // { PAD_START    , VK_LBUTTON },              // マウス左ボタン
-      //  { PAD_R3       , VK_MBUTTON },              // マウス中ボタン
         // マウス右ボタン VK_RBUTTON
         { 0x00, 0x00 }                              // 終了コード
     };
