@@ -21,6 +21,7 @@ ENEMY_SET enemySet[] =
     {1,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
     {1,1,VECTOR2(SCREEN_W, SCREEN_H * 3)},
     {0,2,VECTOR2(SCREEN_W / 3, SCREEN_H * 2)},
+    {0,4,VECTOR2(SCREEN_W / 3, SCREEN_H * 6)},
     {-1,-1,{}},
 
 };
@@ -93,6 +94,7 @@ void enemy_update()
             case 1:moveEnemy1(&enemy[i]); break;
             case 2:moveEnemy2(&enemy[i]); break;
             case 3:moveEnemy3(&enemy[i]); break;
+            case 4:moveEnemy4(&enemy[i]); break;
             default: break;
             }
             ++enemy[i].timer;
@@ -315,6 +317,41 @@ void moveEnemy3(OBJ2D* obj)
         }
     }//case1block
 
+    }
+    return;
+}
+
+void moveEnemy4(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->scale = { 1.0f, 1.0f };
+        obj->spr = EnemyData[0].spr;
+        obj->TexPos = EnemyData[0].texPos;
+        obj->TexSize = EnemyData[0].texSize;
+        obj->pivot = EnemyData[0].pivot;
+        obj->HalfSize.y = MAPCHIP_SIZE;
+        obj->HalfSize.x = MAPCHIP_SIZE * 2;
+        obj->angle = ToRadian(0);
+        obj->speed.x = 1.0f;
+        obj->color.w = 1.0f;
+
+        ++obj->state;
+        //fallthrough
+    case 1:
+
+
+
+        
+        if (HitCheck(&player, obj))
+        {
+            player.HitPoint--;
+            player.InvincibleTimer = INVINCIBLE_TIMER;
+            player.color.z += 0.33f;
+        }
+
+        break;
     }
     return;
 }

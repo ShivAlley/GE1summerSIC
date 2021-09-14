@@ -9,6 +9,7 @@ void game_render();
 
 void game_reset();
 
+void scrollBar();
 
 
 #endif
