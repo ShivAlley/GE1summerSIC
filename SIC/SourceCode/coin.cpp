@@ -1,6 +1,7 @@
 #include "all.h"
 
 int CoinState;
+int getCoinCount = 0;
 
 ENEMY_DATA CoinData = 
 { 
@@ -49,7 +50,9 @@ void NormalCoin0(OBJ2D* objcoin)
 	case 1:
 		if (HitCheck(&player, objcoin))
 		{
-			player.HitPoint++; //HACK:ちゃんと存在しているかのチェックです
+			++getCoinCount;
+			objcoin->MoveAlg = -1;
+			
 		}
 	
 
@@ -103,7 +106,7 @@ void coin_update()
 				break;
 			}
 		}
-
+		debug::setString("coincount%d", getCoinCount);
 
 
 	}
@@ -133,7 +136,7 @@ void coin_render()
 			coin[i].HalfSize * 2,
 			coin[i].HalfSize,
 			ToRadian(0),
-			VECTOR4(1, 1, 0, coin[i].color.w)
+			VECTOR4(1, 1, 0, 0.5f)
 		);
 	}
 }

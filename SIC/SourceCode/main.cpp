@@ -3,12 +3,12 @@
 #include "all.h"
 
 int curScene = SCENE_NONE;
-int nextScene = SCENE_MENU;
+int nextScene = SCENE_TITLE;
 
 //2:WinMain関数を記述する
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 {
-	GameLib::init(L"dropaction", SCREEN_W, SCREEN_H, false);
+	GameLib::init(L"Bring fall", SCREEN_W, SCREEN_H, false);
 
 
 	//6:ゲームループ

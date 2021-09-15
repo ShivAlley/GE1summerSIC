@@ -6,8 +6,11 @@ int EnemyState;
 
 ENEMY_DATA EnemyData[] =
 {
-    {NULL, L"./Data/Images/stickman.png", { 0, 0 }, { 128, 128 }, { 64, 64 }, },
-
+    {NULL, L"./Data/Images/enemy1twitbird.png", { 0, 0 }, { 256, 256 }, { 128, 128 }, },
+    {NULL, L"./Data/Images/enemy1_player_target_bird.png", { 0, 0 }, { 256, 256 }, { 128, 128 }, },
+    {NULL, L"./Data/Images/wind.png", { 0, 0 }, { 256, 256 }, { 128, 128 }, },
+    {NULL, L"./Data/Images/wind.png", { 0, 0 }, { 256, 256 }, { 128, 128 }, },
+    {NULL, L"./Data/Images/enemy4notmove_flyingbird.png", { 0, 0 }, { 256, 256 }, { 128, 128 }, },
 };
 
 
@@ -21,6 +24,7 @@ ENEMY_SET enemySet[] =
     {1,0,VECTOR2(SCREEN_W / 2, SCREEN_H )},
     {1,1,VECTOR2(SCREEN_W, SCREEN_H * 3)},
     {0,2,VECTOR2(SCREEN_W / 3, SCREEN_H * 2)},
+    {0,3,VECTOR2(SCREEN_W / 1.5f, SCREEN_H * 2)},
     {0,4,VECTOR2(SCREEN_W / 3, SCREEN_H * 6)},
     {-1,-1,{}},
 
@@ -134,7 +138,7 @@ void enemy_render()
             enemy[i].pos - scroll, enemy[i].HalfSize * 2,
             enemy[i].HalfSize,
             enemy[i].angle,
-            VECTOR4(1, 1, 1, enemy[i].color.w)
+            VECTOR4(0, 1, 1, 0.4f)
         );
     }
 }
@@ -143,29 +147,32 @@ void moveEnemy0(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->scale = { 1.0f, 1.0f };
+        obj->scale = { 0.5f, 0.5f };
         obj->spr = EnemyData[0].spr;
         obj->TexPos = EnemyData[0].texPos;
         obj->TexSize = EnemyData[0].texSize;
         obj->pivot = EnemyData[0].pivot;
         obj->HalfSize.y = MAPCHIP_SIZE;
-        obj->HalfSize.x = MAPCHIP_SIZE * 2;
+        obj->HalfSize.x = MAPCHIP_SIZE;
         obj->angle = ToRadian(0);
-        obj->speed.x = 1.0f;
+        obj->speed.x = -1.0f;
         obj->color.w = 1.0f;
 
         ++obj->state;
         //fallthrough
     case 1:
 
-        //enemy_act(obj);
+        enemy_act(obj);
+        obj->pos += obj->speed;
 
-        obj->pos.x += obj->speed.x;
-
-        if (obj->pos.x > SCREEN_W - obj->HalfSize.x)
+        if (obj->pos.x > SCREEN_W - obj->HalfSize.x) {
             obj->speed.x *= -1;
-        if (obj->pos.x < 0 + obj->HalfSize.x)
+            obj->scale.x *= -1;
+        }
+        if (obj->pos.x < 0 + obj->HalfSize.x) {
             obj->speed.x *= -1;
+            obj->scale.x *= -1;
+        }
         if (HitCheck(&player, obj))
         {
             player.HitPoint--;
@@ -184,11 +191,11 @@ void moveEnemy1(OBJ2D* obj)
     case 0:
     {
 
-        obj->scale = { 1.0f, 1.0f };
-        obj->spr = EnemyData[0].spr;
-        obj->TexPos = EnemyData[0].texPos;
-        obj->TexSize = EnemyData[0].texSize;
-        obj->pivot = EnemyData[0].pivot;
+        obj->scale = { 0.5f, 0.5f };
+        obj->spr = EnemyData[1].spr;
+        obj->TexPos = EnemyData[1].texPos;
+        obj->TexSize = EnemyData[1].texSize;
+        obj->pivot = EnemyData[1].pivot;
         obj->HalfSize.y = MAPCHIP_SIZE;
         obj->HalfSize.x = MAPCHIP_SIZE;
         obj->angle = ToRadian(0);
@@ -207,7 +214,7 @@ void moveEnemy1(OBJ2D* obj)
     }
     case 1:
     {
-        //enemy_act(obj);
+        enemy_act(obj);
         
         if (HitCheck(&player, obj))
         {
@@ -216,10 +223,16 @@ void moveEnemy1(OBJ2D* obj)
             player.color.z += 0.33f;
         }
         float dx = player.pos.x - obj->pos.x;
-        float dy = player.pos.y + player.speed.y * 16 - obj->pos.y;
+        float dy = player.pos.y + player.speed.y * 32 - obj->pos.y;
         float dist = sqrtf(dx * dx + dy * dy);
         obj->speed = { dx / dist * 6,dy / dist * 6 };
         obj->pos += obj->speed;
+
+        if (obj->speed.x > 0)
+            obj->scale.x = fabs(obj->scale.x);
+        else if(obj->speed.x < 0)
+            obj->scale.x = fabs(obj->scale.x) * -1;
+
         if (obj->pos.y < player.pos.y)
             ++obj->state;
         else
@@ -229,7 +242,7 @@ void moveEnemy1(OBJ2D* obj)
     }//case1block
     case 2:
     {
-        //enemy_act(obj);
+        enemy_act(obj);
         obj->pos += obj->speed;
         if (HitCheck(&player, obj))
         {
@@ -255,11 +268,11 @@ void moveEnemy2(OBJ2D* obj)
     case 0:
     {
 
-        obj->scale = { 1.0f, 1.0f };
-        obj->spr = EnemyData[0].spr;
-        obj->TexPos = EnemyData[0].texPos;
-        obj->TexSize = EnemyData[0].texSize;
-        obj->pivot = EnemyData[0].pivot;
+        obj->scale = { -0.5f, 0.5f };
+        obj->spr = EnemyData[2].spr;
+        obj->TexPos = EnemyData[2].texPos;
+        obj->TexSize = EnemyData[2].texSize;
+        obj->pivot = EnemyData[2].pivot;
         obj->HalfSize.y = MAPCHIP_SIZE * 2;
         obj->HalfSize.x = MAPCHIP_SIZE * 2;
         obj->angle = ToRadian(0);
@@ -272,7 +285,7 @@ void moveEnemy2(OBJ2D* obj)
     case 1:
     {
 
-        //enemy_act(obj);
+        enemy_act(obj);
 
         
         if (HitCheck(&player, obj))
@@ -293,11 +306,11 @@ void moveEnemy3(OBJ2D* obj)
     case 0:
     {
 
-        obj->scale = { 1.0f, 1.0f };
-        obj->spr = EnemyData[0].spr;
-        obj->TexPos = EnemyData[0].texPos;
-        obj->TexSize = EnemyData[0].texSize;
-        obj->pivot = EnemyData[0].pivot;
+        obj->scale = { 0.5f, 0.5f };
+        obj->spr = EnemyData[3].spr;
+        obj->TexPos = EnemyData[3].texPos;
+        obj->TexSize = EnemyData[3].texSize;
+        obj->pivot = EnemyData[3].pivot;
         obj->HalfSize.y = MAPCHIP_SIZE * 2;
         obj->HalfSize.x = MAPCHIP_SIZE * 2;
         obj->angle = ToRadian(0);
@@ -310,7 +323,7 @@ void moveEnemy3(OBJ2D* obj)
     case 1:
     {
 
-        //enemy_act(obj);
+        enemy_act(obj);
 
         
         if (HitCheck(&player, obj))
@@ -326,16 +339,18 @@ void moveEnemy3(OBJ2D* obj)
 
 void moveEnemy4(OBJ2D* obj)
 {
+    float deadFreeze;
+    float deadFall;
     switch (obj->state)
     {
     case 0:
-        obj->scale = { 1.0f, 1.0f };
-        obj->spr = EnemyData[0].spr;
-        obj->TexPos = EnemyData[0].texPos;
-        obj->TexSize = EnemyData[0].texSize;
-        obj->pivot = EnemyData[0].pivot;
-        obj->HalfSize.y = MAPCHIP_SIZE;
-        obj->HalfSize.x = MAPCHIP_SIZE * 2;
+        obj->scale = { 0.6f, 0.6f };
+        obj->spr = EnemyData[4].spr;
+        obj->TexPos = EnemyData[4].texPos;
+        obj->TexSize = EnemyData[4].texSize;
+        obj->pivot = EnemyData[4].pivot;
+        obj->HalfSize.y = MAPCHIP_SIZE + MAPCHIP_HALFSIZE;
+        obj->HalfSize.x = MAPCHIP_SIZE + MAPCHIP_HALFSIZE;
         obj->angle = ToRadian(0);
         obj->speed.x = 1.0f;
         obj->color.w = 1.0f;
@@ -344,9 +359,11 @@ void moveEnemy4(OBJ2D* obj)
         //fallthrough
     case 1:
 
-
+        enemy_act(obj);
 
         
+
+
         if (HitCheck(&player, obj))
         {
             player.HitPoint--;
@@ -376,3 +393,129 @@ void enemy_deinit()
         safe_delete(EnemyData[i].spr);
     }
 }
+
+void enemy_act_init(int action, OBJ2D* enemy)
+{
+    enemy->AnimeKoma = 0;
+    enemy->AnimeTimer = 0;
+    enemy->TexPos.y = enemy->TexSize.y * action;
+    enemy->TexPos.x = 0;
+}
+
+void enemy_act(OBJ2D* enemy)
+{
+    //0=twitbird
+    if (enemy->MoveAlg == 0)
+    {
+
+        switch (enemy->act)
+        {
+        case EnIDLE_INIT:
+            ++enemy->act;
+            //force fallthrough
+        case EnIDLE:
+            ++enemy->act;
+            //force fallthrough
+            //twitbird is not stop
+        case EnMOVE_INIT:
+            enemy_act_init(0, enemy);
+            ++enemy->act;
+            //fallthrough
+        case EnMOVE:
+            enemy->AnimeKoma = enemy->AnimeTimer / 12 % 2;
+            enemy->TexPos.x = enemy->AnimeKoma * enemy->TexSize.x;
+            ++enemy->AnimeTimer;
+
+
+            break;
+        case EnDEAD_INIT:
+            enemy_act_init(1, enemy);
+            ++enemy->act;
+            //fallthrough
+        case EnDEAD:
+            //TODOneedanimation
+
+
+            break;
+        }
+    }
+    //1=hawk
+    else if (enemy->MoveAlg == 1)
+    {
+        switch (enemy->act)
+        {
+        case EnIDLE_INIT:
+            enemy_act_init(0, enemy);
+            ++enemy->act;
+        case EnIDLE:
+            //no animation
+            if (enemy->speed.y) {
+                enemy->act = EnMOVE_INIT;
+                break;
+            }
+            break;
+        case EnMOVE_INIT:
+            enemy_act_init(0, enemy);
+            ++enemy->act;
+            //fallthrough
+        case EnMOVE:
+            enemy->AnimeKoma = enemy->AnimeTimer / 6 % 3;
+            enemy->TexPos.x = enemy->AnimeKoma * enemy->TexSize.x;
+            ++enemy->AnimeTimer;
+
+
+            break;
+        case EnDEAD_INIT:
+            enemy_act_init(1, enemy);
+            ++enemy->act;
+            //fallthrough
+        
+        case EnDEAD:
+        
+            enemy->TexPos.x = 0;
+        
+        
+            
+
+            break;
+
+           
+        }//case endead init ~ endead block
+    }
+    //2||3 = wind
+    else if (enemy->MoveAlg == 2 || enemy->MoveAlg == 3)
+    {
+        switch (enemy->act)
+        {
+        case EnIDLE_INIT:
+            enemy_act_init(0, enemy);
+            ++enemy->act;
+            //fallthrough
+        case EnIDLE:
+            enemy->AnimeKoma = enemy->AnimeTimer / 8 % 4;
+            enemy->TexPos.x = enemy->AnimeKoma * enemy->TexSize.x;
+            ++enemy->AnimeTimer;
+            break;
+        }
+    }
+    //4 = not move bird
+    else if (enemy->MoveAlg == 4)
+    {
+        switch (enemy->act)
+        {
+        case EnIDLE_INIT:
+            enemy_act_init(0, enemy);
+            ++enemy->act;
+            //fallthrough
+        case EnIDLE:
+            enemy->AnimeKoma = enemy->AnimeTimer / 12 % 2;
+            enemy->TexPos.x = enemy->AnimeKoma * enemy->TexSize.x;
+            ++enemy->AnimeTimer;
+            break;
+        case EnDEAD_INIT:
+            //TODOneedanimation
+            break;
+        }
+    }
+}
+

@@ -12,6 +12,7 @@ void coin_deinit();
 
 
 extern int CoinState;
+extern int getCoinCount;
 
 
 #endif // !COIN_H

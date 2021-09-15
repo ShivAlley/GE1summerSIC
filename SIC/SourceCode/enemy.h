@@ -16,6 +16,17 @@ struct ENEMY_SET
     VECTOR2 pos;
 };
 
+enum ENEMY_ACT
+{
+    EnIDLE_INIT,
+    EnIDLE,
+    EnMOVE_INIT,
+    EnMOVE,
+    EnDEAD_INIT,
+    EnDEAD,
+
+};
+
 #define ENEMY_MAX 1000
 
 void enemy_init();
@@ -30,6 +41,7 @@ void moveEnemy1(OBJ2D* obj);
 void moveEnemy2(OBJ2D* obj);
 void moveEnemy3(OBJ2D* obj);
 void moveEnemy4(OBJ2D* obj);
+void enemy_act(OBJ2D* enemy);
 
 
 #endif // ENEMY_H
