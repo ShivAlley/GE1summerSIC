@@ -104,7 +104,7 @@ void enemy_update()
             
         }
         //debug::setString("Enemy%d", sizeof(enemySet) / sizeof(ENEMY_SET));
-        //debug::setString("timer%d", player.InvincibleTimer);
+        debug::setString("timer%d", player.InvincibleTimer);
     }
 
     } //switch}
@@ -244,7 +244,7 @@ void moveEnemy1(OBJ2D* obj)
     }//case2block
     
     }
-    //debug::setString("state%d", obj->state);
+    debug::setString("state%d", obj->state);
     return;
 }
 

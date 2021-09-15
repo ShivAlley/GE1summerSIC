@@ -17,7 +17,7 @@ void result_update()
 		ResultState++;
 		//fallthrough
 	case 2:
-		if (TRG(0) & PAD_SPACE)
+		if (TRG(0) & PAD_TRG1)
 		{
 			nextScene = SCENE_MENU;
 		}

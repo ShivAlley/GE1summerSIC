@@ -16,7 +16,7 @@ struct ENEMY_SET
     VECTOR2 pos;
 };
 
-#define ENEMY_MAX 1000
+#define ENEMY_MAX 100
 
 void enemy_init();
 void enemy_update();

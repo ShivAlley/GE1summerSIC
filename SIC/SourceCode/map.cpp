@@ -4,7 +4,7 @@
 
 void map_update()
 {
-	//debug::setString("cursor%d", cursor);
+	debug::setString("cursor%d", cursor);
 	
 }
 

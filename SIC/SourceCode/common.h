@@ -31,7 +31,7 @@
 #define WorldWidth (MAPCHIP_SIZE * MapWidth) 
 #define WorldHeight (MAPCHIP_SIZE * MapHeight)
 #define SCROLL_MERGIN_X (SCREEN_W / 2)
-#define SCROLL_MARGIN_Y (SCREEN_H / 2)
+#define SCROLL_MERGIN_Y (SCREEN_H / 2)
 #define ToRadian( x )   DirectX::XMConvertToRadians( x )    
 #define ToDegree( x )   DirectX::XMConvertToDegrees( x )    
 

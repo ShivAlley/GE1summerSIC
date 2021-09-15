@@ -12,11 +12,11 @@ void scrollMap()
 		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
 	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
 		scroll.x = player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X;
-	if (STATE(0) & PAD_SPACE)
+	if (STATE(0) & PAD_TRG1)
 	{
 		ScrollMerginY += GRAVITY * 10;
-		if (ScrollMerginY > SCROLL_MARGIN_Y / 2) // SCROLL_MERGIN_Y / 2 === SCROLL_MERGIN_Y * 1.5f - SCROLL_MERGIN_Y
-			ScrollMerginY = SCROLL_MARGIN_Y / 2;
+		if (ScrollMerginY > SCROLL_MERGIN_Y / 2) // SCROLL_MERGIN_Y / 2 === SCROLL_MERGIN_Y * 1.5f - SCROLL_MERGIN_Y
+			ScrollMerginY = SCROLL_MERGIN_Y / 2;
 	}
 	else
 	{
@@ -25,10 +25,10 @@ void scrollMap()
 			ScrollMerginY = 0;
 	}
 	
-	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MARGIN_Y * 1.5f - ScrollMerginY) //HACK:need balancing 1.5f ~ 1.7f
-		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MARGIN_Y * 1.5f - ScrollMerginY;
-	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0.1f)
-		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0.1f;
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f - ScrollMerginY) //HACK:need balancing 1.5f ~ 1.7f
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 1.5f - ScrollMerginY;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0.1f;
 
 #if 0 // backup
 	if (scroll.x < player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X)
@@ -106,7 +106,7 @@ void game_update()
 		enemy_update();
 		coin_update();
 		scrollMap();
-		//debug::setString("scrollY %f", scroll.y);
+		debug::setString("scrollY %f", scroll.y);
 
 		GameTimer++;
 		
@@ -141,21 +141,18 @@ void game_reset()
 }
 void scrollBar(VECTOR2 scroll)
 {
-	float CalcMargin = 0.1f;
-	float margin = SCREEN_H * CalcMargin;
-	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MARGIN_Y * 0)
-		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MARGIN_Y * 0;
-	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0)
-		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0;
+	int margin = 120;
+	if (scroll.y < player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 0)
+		scroll.y = player.pos.y + player.HalfSize.y - SCREEN_H + SCROLL_MERGIN_Y * 0;
+	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0)
+		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MERGIN_Y * 0;
 
-	scroll.y /= SCREEN_H * TEMP_MASICNUMBER / SCREEN_H;
-	//シークバー現在地 = scroll.y / コースの全長 / スクリーンの高さ
-	scroll.y *= 1 - CalcMargin * 2;
+	scroll.y /= SCREEN_H * TEMP_MASICNUMBER / (SCREEN_H - margin);
 
 
 
-
-	
+	//BarposY=プレイヤーY座標÷(終点の座標÷(スクリーンの一番下-棒の幅))
+	float BarposY = player.pos.y /45.0f;
 	primitive::rect(
 		{ 1260,margin + scroll.y },
 		{ 20,5 },
@@ -164,15 +161,15 @@ void scrollBar(VECTOR2 scroll)
 		{ 1, 1, 1, 1 }
 
 	);
-	primitive::rect(//シークバー上限
-		{ 1275,margin },
+	primitive::rect(
+		{ 1275,14.2f },
 		{ 5,5 },
 		{ 0,0 },
 		ToRadian(0),
 		{ 0, 0, 1, 1 }
 	);
-	primitive::rect(//シークバー下限
-		{ 1275,SCREEN_H - margin },
+	primitive::rect(
+		{ 1275,672 },
 		{ 5,5 },
 		{ 0,0 },
 		ToRadian(0),
