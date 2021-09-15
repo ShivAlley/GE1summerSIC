@@ -8,8 +8,9 @@ int nextScene = SCENE_MENU;
 //2:WinMain関数を記述する
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 {
-	//4;ゲームライブラリの初期設定
-	GameLib::init(L"DropAction", SCREEN_W, SCREEN_H);
+	
+
+
 	//6:ゲームループ
 
 	while (GameLib::gameLoop(true))

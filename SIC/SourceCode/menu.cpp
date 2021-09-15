@@ -44,7 +44,7 @@ void menu_update()
 		if (TRG(0) & PAD_LEFT)cursor--;
 		if (cursor < first)cursor = first;
 		if (cursor > fifth)cursor = fifth;
-		debug::setString("cursor%d", cursor);
+		//debug::setString("cursor%d", cursor);
 	}
 	MenuTimer++;
 }
