@@ -27,23 +27,29 @@ namespace GameLib
         { PAD_LEFT      , Keyboard::A },            // 'A'
         { PAD_RIGHT     , Keyboard::D },            // 'D'
 
-        { PAD_START     , Keyboard::Enter },        // VK_RETURN
-        { PAD_SELECT    , Keyboard::Back },         // VK_BACK
-        { PAD_TRG1      , Keyboard::Space },            // VK_SPACE
-        { PAD_TRG2      , Keyboard::E },            // 'E'
+        { PAD_UP2        , Keyboard::Up },         
+        { PAD_DOWN2      , Keyboard::Down },       
+        { PAD_LEFT2      , Keyboard::Left },       
+        { PAD_RIGHT2     , Keyboard::Right },      
 
-        { PAD_TRG3      , Keyboard::D4 },                    // '4'
-        { PAD_TRG4       , Keyboard::R },
+        { PAD_START     , Keyboard::Enter },       
+        { PAD_SELECT    , Keyboard::Back },        
+        { PAD_SPACE      , Keyboard::Space },      
+        { PAD_TRG2      , Keyboard::E },           
 
-        { PAD_L1        , VK_LBUTTON },        // mouse1
-        { PAD_L3        , Keyboard::D0 },            // 
-        { PAD_R1        , Keyboard::D1 },            // 
-        { PAD_R2        , Keyboard::D2 },            // 
-        { PAD_R3        , Keyboard::D3 },              // マウス中ボタン
+        { PAD_KB_R      , Keyboard::R },
 
-       // { PAD_START    , VK_LBUTTON },              // マウス左ボタン
+        { PAD_MOUSE1    , VK_LBUTTON },        
+        { PAD_R0        , Keyboard::D0 },          
+        { PAD_R1        , Keyboard::D1 },          
+        { PAD_R2        , Keyboard::D2 },          
+        { PAD_R3        , Keyboard::D3 },          
+        { PAD_R4      , Keyboard::D4 },          
+        { PAD_LSHIFT    , Keyboard::LeftShift },   
+
+       // { PAD_START    , VK_LBUTTON },           
         // マウス右ボタン VK_RBUTTON
-        { 0x00, 0x00 }                              // 終了コード
+        { 0x00, 0x00 }                             
     };
 
     // ジョイスティック割り当てデータ
@@ -54,11 +60,11 @@ namespace GameLib
         { PAD_RIGHT     , GamePad::RIGHT },         // 右キー
 
         { PAD_START     , GamePad::START },         // スタートボタン
-        { PAD_TRG1      , GamePad::A },             // Aボタン
+        { PAD_SPACE      , GamePad::A },             // Aボタン
         { PAD_TRG2      , GamePad::B },             // Bボタン
-        { PAD_TRG3      , GamePad::X },             // Xボタン
-        { PAD_TRG4      , GamePad::Y },             // Yボタン
-        { PAD_L1        , GamePad::LSHOULDER },     // Lボタン
+        { PAD_R4      , GamePad::X },             // Xボタン
+        { PAD_KB_R      , GamePad::Y },             // Yボタン
+        { PAD_MOUSE1        , GamePad::LSHOULDER },     // Lボタン
         { PAD_R1        , GamePad::RSHOULDER },     // Rボタン
 
         { PAD_SELECT    , GamePad::BACK },          // バック（セレクト）ボタン
@@ -78,9 +84,9 @@ namespace GameLib
         //{ PAD_LEFT      , Keyboard::A },            // VK_A
         //{ PAD_RIGHT     , Keyboard::D },            // VK_D
 
-        { PAD_TRG1      , Keyboard::J },            // 'J'
+        { PAD_SPACE      , Keyboard::J },            // 'J'
         { PAD_TRG2      , Keyboard::K },            // 'K'
-        { PAD_TRG3      , Keyboard::L },            // 'L'
+        { PAD_R4      , Keyboard::L },            // 'L'
 
         { PAD_SELECT    , Keyboard::F1 },           // VK_F1
 

@@ -13,6 +13,7 @@ POINT mouse;
 
 
 
+
 void player_moveX()
 {
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
@@ -25,8 +26,8 @@ void player_moveX()
 		if (STATE(0) & PAD_LEFT && player.scale.x > 0)
 			player.scale.x *= -1.0f;
 	}
-	if (player.pos.x < player.HalfSize.x) {
-		player.pos.x = player.HalfSize.x;
+	if (player.pos.x < player.HalfSize.x * 2) {
+		player.pos.x = player.HalfSize.x * 2;
 		player.speed.x = 0;
 	}
 	if (player.pos.x > SCREEN_W - player.HalfSize.x) {
@@ -42,22 +43,20 @@ void player_moveX()
 
 void player_moveY()
 {
-	player.speed.y += GRAVITY; // 実質的にアクセルの加減として機能する
-	if (!(STATE(0) & PAD_TRG1) && player.speed.y > MAX_SPEED_Y / 4)
-		player.speed.y -= GRAVITY * 2; //ブレーキの加減
-	if (player.speed.y > MAX_SPEED_Y)
-		player.speed.y = MAX_SPEED_Y;
-	
-
-	//HACK:暫定的な地面の実装のため改修が必要
+	player.speed.y += GRAVITY; // accele
+	if (!(STATE(0) & PAD_SPACE) && player.speed.y > MAX_SPEED_Y / 4)
+		player.speed.y -= GRAVITY * 2; //deccle
+	//HACK:temp ground
 	if (player.pos.y > SCREEN_H * TEMP_MASICNUMBER)
 	{		  
 		player.pos.y = SCREEN_H * TEMP_MASICNUMBER;
 		player.speed.y = 0.0f;
 		player.OnGround = true;
 	}
-
 	player.pos.y += player.speed.y;
+	if (player.speed.y > MAX_SPEED_Y)
+		player.speed.y = MAX_SPEED_Y;
+	
 #if _DEBUG
 	if (STATE(0) & PAD_UP)
 	{
@@ -118,11 +117,11 @@ void player_update()
 	switch (PlayerState)
 	{
 	case 0:
-		//初期設定
+		//ini setting
 		++PlayerState;
 		//fallthrough
 	case 1:
-		//パラメータの設定
+		//param set
 		player = {};
 		player.pos = VECTOR2(0, SCREEN_W / 2);
 		player.HalfSize = VECTOR2(MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE);
@@ -130,8 +129,11 @@ void player_update()
 		player.color.z = 0;
 		player.area = cursor;
 		++PlayerState;
+
 		//fallthrough
 	case 2: 
+	{
+
 		//loop
 		player_moveX();
 		player_moveY();
@@ -163,29 +165,74 @@ void player_update()
 		{
 			game_reset();
 		}
-#if _DEBUG
-		if (TRG(0) & PAD_TRG4)game_reset();
-		if (TRG(0) & PAD_L3) OutEnSetText(0);
-		if (TRG(0) & PAD_R1) OutEnSetText(1);
-		if (TRG(0) & PAD_R2) OutEnSetText(2);
-		if (TRG(0) & PAD_R3) OutEnSetText(3);
-		if (TRG(0) & PAD_TRG3) OutEnSetText(4);
-		
-#endif
-		
+		int EnNo = EnIntoCheck(MousePos, enemy, ENEMY_MAX);
+		if (EnNo != -1 && (TRG(0) & PAD_MOUSE1))
+		{
+			enemy[EnNo].MoveAlg = -1;
+			//HACK:temporary enemy kill
+		}
 
 		
-		int EnNo = EnIntoCheck(MousePos, enemy, ENEMY_MAX);
-		if (EnNo == -1)
-			break;
+
+#if _DEBUG
+		if (TRG(0) & PAD_KB_R)game_reset();
+		if ((STATE(0) & PAD_LEFT) && (STATE(0) & PAD_RIGHT) && (STATE(0) & PAD_DOWN) && (TRG(0) & PAD_SPACE))
+			++PlayerState;
+			//toggle god mode
+		break;
+	}//case2block
+	case 3:
+		player.pos.x = (int)player.pos.x;
+		player.pos.y = (int)player.pos.y;
+		player.pos.x += player.speed.x;
+
+		if (STATE(0) & PAD_UP2 && !(STATE(0) & PAD_LSHIFT))
+			player.speed.y += -1;
+		else if (STATE(0) & PAD_DOWN2 && !(STATE(0) & PAD_LSHIFT))
+			player.speed.y += 1;
+		else if ((STATE(0) & PAD_LSHIFT) && (TRG(0) & PAD_UP2))
+			player.speed.y = -1.0f;
+		else if ((STATE(0) & PAD_LSHIFT) && (TRG(0) & PAD_DOWN2))
+			player.speed.y = 1.0f;
 		else
-		{
-			if (TRG(0) & PAD_L1)
-			{
-				enemy[EnNo].MoveAlg = -1;
-				//HACK:仮の敵消去処理
-			}
+			player.speed.y = 0;
+
+		player.pos.y += player.speed.y;
+		if (STATE(0) & PAD_LEFT2 && !(STATE(0) & PAD_LSHIFT))
+			player.speed.x += -1;
+		else if (STATE(0) & PAD_RIGHT2 && !(STATE(0) & PAD_LSHIFT))
+			player.speed.x += 1;
+		else if ((STATE(0) & PAD_LSHIFT) && (TRG(0) & PAD_LEFT2))
+			player.speed.x = -1.0f;
+		else if ((STATE(0) & PAD_LSHIFT) && (TRG(0) & PAD_RIGHT2))
+			player.speed.x = 1.0f;
+		else
+			player.speed.x = 0;
+
+		if (player.pos.x < player.HalfSize.x * 4) {
+			player.pos.x = player.HalfSize.x * 4;
+			
 		}
+		if (player.pos.x > SCREEN_W - player.HalfSize.x * 4) {
+			player.pos.x = SCREEN_W - player.HalfSize.x * 4;
+			
+		}//prevent enemy stack on spawn
+
+		debug::setString("god mode is enabled");
+		debug::setString("0~4 : enemy set");
+		debug::setString("posx%f", player.pos.x);
+		debug::setString("posy%f", player.pos.y);
+
+		if (TRG(0) & PAD_R0) OutEnSetText(0); 
+		if (TRG(0) & PAD_R1) OutEnSetText(1); 
+		if (TRG(0) & PAD_R2) OutEnSetText(2); 
+		if (TRG(0) & PAD_R3) OutEnSetText(3); 
+		if (TRG(0) & PAD_R4) OutEnSetText(4); 
+		if ((STATE(0) & PAD_LEFT) && (STATE(0) & PAD_RIGHT) && (STATE(0) & PAD_DOWN) && (TRG(0) & PAD_SPACE))
+			--PlayerState;
+			//force fallback
+		break;
+#endif
 
 	}
 }
@@ -221,30 +268,30 @@ void OutEnSetText(int EnType)
 	using namespace std;
 	const wchar_t* EnSetPos = L"Enpos.txt";
 	//const wchar_t* EnSetPos = L"Coinpos.txt";
-	//HACK目印アノテーション
+	//HACK coin change anotation
 	ofstream ofs;
 	ofs.open(EnSetPos, ios::app);
 	if (!EnSetPos)
 		return;
 	switch (EnType)
 	{
-	case 0://往復する敵 もしくはコイン
+	case 0://coin or 0Enemy
 		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
 			<< player.pos.x << "," << player.pos.y << "))}," << endl;
 		break;
-	case 1://プレイヤーに突撃する敵
+	case 1://1enemy
 		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
 			<< player.pos.x << "," << player.pos.y << "))}," << endl;
 		break;
-	case 2://右に飛ばされる風
+	case 2://2enemy
 		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
 			<< player.pos.x << "," << player.pos.y << "))}," << endl;
 		break;
-	case 3://左に飛ばされる風
+	case 3://3enemy
 		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
 			<< player.pos.x << "," << player.pos.y << "))}," << endl;
 		break;
-	case 4://静止している敵
+	case 4://4enemy
 		ofs << "{" << player.area << ", " << EnType << ", VECTOR2("
 			<< player.pos.x << "," << player.pos.y << "))}," << endl;
 		break;
@@ -270,5 +317,5 @@ void CalcResult()
 {
 	score = player.pos.y;
 	nextScene = SCENE_RESULT;
-	//HACK:暫定的なスコア計算
+	//HACK:temporary score calc
 }
