@@ -2,7 +2,7 @@
 
 int MenuState;
 int MenuTimer;
-
+int Hiscore[2];
 int cursor;
 
 enum stage
@@ -25,7 +25,7 @@ void menu_update()
 		//fallthrough
 	case 1:
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-
+		LoadHiscore();
 		MenuState++;
 		//fallthrough
 	case 2:
@@ -44,6 +44,14 @@ void menu_update()
 		if (TRG(0) & PAD_LEFT)cursor--;
 		if (cursor < first)cursor = first;
 		if (cursor > fifth)cursor = fifth;
+		if (cursor == 0)
+		{
+			debug::setString("Hiscore%d", Hiscore[0]);
+		}
+		if (cursor == 1)
+		{
+			debug::setString("Hiscore%d", Hiscore[1]);
+		}
 		//debug::setString("cursor%d", cursor);
 	}
 	MenuTimer++;
@@ -147,9 +155,28 @@ void menu_init()
 	MenuState = 0;
 	MenuTimer = 0;
 	cursor = 0;
+	Hiscore[2] = { 0 };
 }
 
 void menu_deinit()
 {
 
+}
+
+void LoadHiscore()
+{
+	using namespace std;
+	ifstream ifs;
+	ifs.open("score0.txt");
+	if (ifs)
+	{
+		ifs >> Hiscore[0];
+		ifs.close();
+	}
+	ifs.open("score1.txt");
+	if (ifs)
+	{
+		ifs >> Hiscore[1];
+		ifs.close();
+	}
 }

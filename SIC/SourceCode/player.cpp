@@ -3,6 +3,7 @@
 
 
 int PlayerState;
+int PlayerTimer;
 float fade;
 int score;
 OBJ2D player;
@@ -43,7 +44,7 @@ void player_moveX()
 
 void player_moveY()
 {
-	player.speed.y += GRAVITY; // accele
+	
 	if (!(STATE(0) & PAD_SPACE) && player.speed.y > MAX_SPEED_Y / 4)
 		player.speed.y -= GRAVITY * 2; //deccle
 	//HACK:temp ground
@@ -128,6 +129,7 @@ void player_update()
 		player.HitPoint = 3;
 		player.color.z = 0;
 		player.area = cursor;
+		PlayerTimer = 0;
 		++PlayerState;
 
 		//fallthrough
@@ -143,21 +145,49 @@ void player_update()
 		debug::setString("fade%f", fade);
 		debug::setString("speedY%f", player.speed.y);
 		debug::setString("HP%d", player.HitPoint);
-		
+		debug::setString("TIMER%d", PlayerTimer);
 		GetCursorPos(&mouse);
 		ScreenToClient(window::getHwnd(), &mouse);
 		MousePos.x = mouse.x;
 		MousePos.y = mouse.y;
 		MousePos += scroll;
 
-
+		if (PlayerTimer==5)
+		{
+			player.speed = {0,0};
+			player.pos.x -= player.speed.x;
+		}
+		if (PlayerTimer > 5)
+		{
+			player.speed.y += GRAVITY; // accele
+		}
+		if (TRG(0) & PAD_SPACE)
+		{
+			PlayerTimer++;
+		}
+		if (PlayerTimer < 5)
+		{
+			PlayerTimer++;
+		}
+		
 		if (player.InvincibleTimer > 0)
 			--player.InvincibleTimer;
 		if (player.OnGround)
+		{
 			CalcResult();
+			if (Hiscore[player.area] < score)
+			{
+				RecordResult(player.area);
+			}
+		}
+			
 		if (fade > 1)
 		{
 			CalcResult();
+			if (Hiscore[player.area] < score)
+			{
+				RecordResult(player.area);
+			}
 			fade = 0;
 			player.OnGround = false;
 		}
@@ -171,7 +201,7 @@ void player_update()
 			enemy[EnNo].MoveAlg = -1;
 			//HACK:temporary enemy kill
 		}
-
+		
 		
 
 #if _DEBUG
@@ -255,6 +285,7 @@ void player_render()
 void player_init()
 {
 	PlayerState = 0;
+	PlayerTimer = 0;
 	fade = 0;
 }
 
@@ -319,3 +350,34 @@ void CalcResult()
 	nextScene = SCENE_RESULT;
 	//HACK:temporary score calc
 }
+
+void RecordResult(int stage)
+{
+	using namespace std;
+	ofstream ofs;
+	switch (stage)
+	{
+	case 0:
+		ofs.open("score0.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	case 1:
+		ofs.open("score1.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	}
+		
+	
+	
+}
+

@@ -50,6 +50,7 @@ extern int GameTimer;
 extern int MenuTimer;
 extern int ResultTimer;
 extern int score;
+extern int Hiscore[2];
 extern int cursor;
 extern VECTOR2 scroll;
 extern bool forcereset;

@@ -6,6 +6,9 @@ void menu_deinit();
 void menu_update();
 void menu_render();
 
+void LoadHiscore();
+
+
 
 
 
