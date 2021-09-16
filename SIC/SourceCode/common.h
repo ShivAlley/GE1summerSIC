@@ -9,6 +9,8 @@
 
 
 #define MAPCHIP_SIZE 32.0f
+#define PLAYER_CHIP_SIZE 32.0f
+#define PLAYER_CHIP_HALFSIZE PLAYER_CHIP_SIZE / 2
 #define MAPCHIP_HALFSIZE (MAPCHIP_SIZE / 2)
 #define GRAVITY 0.1f
 #define MAX_SPEED_Y 24.0f
@@ -45,6 +47,7 @@ extern int ResultState;
 extern int EnemyState;
 extern int PlayerState;
 extern int CoinState;
+extern int MapState;
 extern int TitleTimer;
 extern int GameTimer;
 extern int MenuTimer;

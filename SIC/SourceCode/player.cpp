@@ -3,29 +3,77 @@
 
 
 int PlayerState;
-int PlayerTimer;
 float fade;
 int score;
 OBJ2D player;
 VECTOR2 scroll;
 VECTOR2 MousePos;
 POINT mouse;
+Sprite* playerSpr;
+Sprite* heartUISpr;
+Sprite* scissorsUISpr;
+
+int PlayerTimer = 0;
+
+void RecordResult(int stage)
+{
+	using namespace std;
+	ofstream ofs;
+	switch (stage)
+	{
+	case 0:
+		ofs.open("score0.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	case 1:
+		ofs.open("score1.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	}
 
 
 
+}
+
+void stage_start_wait()
+{
+	if (PlayerTimer == 5)
+	{
+		player.speed = { 0,0 };
+	}
+	if (PlayerTimer > 5)
+	{
+		player.speed.y += GRAVITY; // accele
+	}
+	if (TRG(0) & PAD_SPACE)
+	{
+		PlayerTimer++;
+	}
+	if (PlayerTimer < 5)
+	{
+		PlayerTimer++;
+	}
+}
 
 
 void player_moveX()
 {
+	
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
 		player.speed.x += 0.3f;
-		if (STATE(0) & PAD_RIGHT && player.scale.x < 0)
-			player.scale.x *= -1.0f;
 	}
 	else if (STATE(0) & PAD_LEFT && !(STATE(0) & PAD_RIGHT)) {
 		player.speed.x -= 0.3f;
-		if (STATE(0) & PAD_LEFT && player.scale.x > 0)
-			player.scale.x *= -1.0f;
 	}
 	if (player.pos.x < player.HalfSize.x * 2) {
 		player.pos.x = player.HalfSize.x * 2;
@@ -44,17 +92,20 @@ void player_moveX()
 
 void player_moveY()
 {
-	
+	player.speed.y += GRAVITY; // ƒAƒNƒZƒ‹
 	if (!(STATE(0) & PAD_SPACE) && player.speed.y > MAX_SPEED_Y / 4)
 		player.speed.y -= GRAVITY * 2; //deccle
-	//HACK:temp ground
-	if (player.pos.y > SCREEN_H * TEMP_MASICNUMBER)
-	{		  
-		player.pos.y = SCREEN_H * TEMP_MASICNUMBER;
+	
+	
+	if (player.pos.y > mapHeight[player.area])
+	{
+		player.pos.y = mapHeight[player.area];
 		player.speed.y = 0.0f;
 		player.OnGround = true;
 	}
+	
 	player.pos.y += player.speed.y;
+	score += player.speed.y;
 	if (player.speed.y > MAX_SPEED_Y)
 		player.speed.y = MAX_SPEED_Y;
 	
@@ -96,6 +147,8 @@ int EnIntoCheck(VECTOR2 mousepos, OBJ2D enemy[], int EnMax)
 	for (int i = 0; i < EnMax; ++i)
 	{
 		if (enemy[i].MoveAlg == -1) continue;
+		if (enemy[i].MoveAlg == 2) continue;
+		if (enemy[i].MoveAlg == 3) continue;
 		float EnemyLeft =  enemy[i].pos.x - enemy[i].HalfSize.x;
 		float EnemyRight = enemy[i].pos.x + enemy[i].HalfSize.x;
 		float EnemyTop = enemy[i].pos.y - enemy[i].HalfSize.y;
@@ -119,78 +172,57 @@ void player_update()
 	{
 	case 0:
 		//ini setting
+		//player.spr = sprite_load(L"./Data/Images/chara_marged.png");
+		playerSpr = sprite_load(L"./Data/Images/chara_marged.png");
+		heartUISpr = sprite_load(L"./Data/Images/life.png");
+		scissorsUISpr = sprite_load(L"./Data/Images/cut.png");
 		++PlayerState;
 		//fallthrough
 	case 1:
 		//param set
-		player = {};
-		player.pos = VECTOR2(0, SCREEN_W / 2);
-		player.HalfSize = VECTOR2(MAPCHIP_HALFSIZE, MAPCHIP_HALFSIZE);
+		player = {}; //if .spr ignore can use player.spr member
+		player.HalfSize = VECTOR2(PLAYER_CHIP_HALFSIZE, PLAYER_CHIP_SIZE);
+		player.scale = VECTOR2(
+			1.0f / (PLAYER_TEX_W / (player.HalfSize.x * 2)),
+			1.0f / (PLAYER_TEX_H / (player.HalfSize.y * 2)));
+		//common.h "#define player_chip_size" can change player size
+		player.TexPos = VECTOR2(0, 0); 
+		player.TexSize = VECTOR2(PLAYER_TEX_W, PLAYER_TEX_H);
+		player.pivot = VECTOR2(PLAYER_PIVOT_X, PLAYER_PIVOT_Y);
+		player.pos = VECTOR2(SCREEN_W / 2, player.HalfSize.y);
 		player.HitPoint = 3;
 		player.color.z = 0;
 		player.area = cursor;
-		PlayerTimer = 0;
+		score = 0;
 		++PlayerState;
 
 		//fallthrough
 	case 2: 
 	{
-
 		//loop
-		player_moveX();
-		player_moveY();
+		stage_start_wait();
+		player_act();
+		debug::setString("scalex%f", player.scale.x);
+		debug::setString("scaley%f", player.scale.y);
 		debug::setString("posx%f", player.pos.x);
 		debug::setString("posy%f", player.pos.y);
 		debug::setString("OnGround%d", player.OnGround);
 		debug::setString("fade%f", fade);
 		debug::setString("speedY%f", player.speed.y);
 		debug::setString("HP%d", player.HitPoint);
-		debug::setString("TIMER%d", PlayerTimer);
+
+		
 		GetCursorPos(&mouse);
 		ScreenToClient(window::getHwnd(), &mouse);
 		MousePos.x = mouse.x;
 		MousePos.y = mouse.y;
 		MousePos += scroll;
 
-		if (PlayerTimer==5)
-		{
-			player.speed = {0,0};
-			player.pos.x -= player.speed.x;
-		}
-		if (PlayerTimer > 5)
-		{
-			player.speed.y += GRAVITY; // accele
-		}
-		if (TRG(0) & PAD_SPACE)
-		{
-			PlayerTimer++;
-		}
-		if (PlayerTimer < 5)
-		{
-			PlayerTimer++;
-		}
-		
+
 		if (player.InvincibleTimer > 0)
 			--player.InvincibleTimer;
 		if (player.OnGround)
-		{
-			CalcResult();
-			if (Hiscore[player.area] < score)
-			{
-				RecordResult(player.area);
-			}
-		}
-			
-		if (fade > 1)
-		{
-			CalcResult();
-			if (Hiscore[player.area] < score)
-			{
-				RecordResult(player.area);
-			}
-			fade = 0;
-			player.OnGround = false;
-		}
+			fadeout();
 		if (!player.HitPoint)
 		{
 			game_reset();
@@ -201,7 +233,7 @@ void player_update()
 			enemy[EnNo].MoveAlg = -1;
 			//HACK:temporary enemy kill
 		}
-		
+
 		
 
 #if _DEBUG
@@ -265,16 +297,113 @@ void player_update()
 #endif
 
 	}
+	++player.timer;
+}
+
+
+void tuto_end()
+{
+	primitive::rect(
+		0, 0,
+		SCREEN_W, SCREEN_H,
+		0, 0,
+		0,
+		1, 1, 1, fade
+	);
+	fade += 0.008f;
+	if (fade > 1)
+		nextScene = SCENE_MENU;
+}
+
+void tuto_text_render()
+{
+	if (player.area == 0)
+	{
+		if (player.pos.y < 4000)
+			text_out(
+				1, "A or D to move",
+				player.pos.x - player.HalfSize.x * 10 - scroll.x, player.pos.y - player.HalfSize.y * 2 - scroll.y,
+				0.75f, 1,
+				1, 1, 0, 1
+			);
+		if (player.pos.y > 4000 && player.pos.y < 10000)
+			text_out(
+				1, "SPACE to acceleration",
+				player.pos.x - player.HalfSize.x * 10 - scroll.x, player.pos.y - player.HalfSize.y * 2 - scroll.y,
+				0.75f, 1,
+				1, 1, 0, 1
+			);
+		if (player.pos.y > 10000 && player.pos.y < 15000)
+			text_out(
+				1, "LEFT CLICK to can cut enemy",
+				player.pos.x - player.HalfSize.x * 10 - scroll.x, player.pos.y - player.HalfSize.y * 2 - scroll.y,
+				0.75f, 1,
+				1, 1, 0, 1
+			);
+		if (player.pos.y > 15000 && player.pos.y < 25000)
+			text_out(
+				1, "correct more letters!",
+				player.pos.x - player.HalfSize.x * 10 - scroll.x, player.pos.y - player.HalfSize.y * 2 - scroll.y,
+				0.75f, 1,
+				1, 1, 0, 1
+			);
+		if (player.pos.y > 25000 && player.pos.y < 30000)
+			text_out(
+				1, "good luck!",
+				player.pos.x - player.HalfSize.x * 10 - scroll.x, player.pos.y - player.HalfSize.y * 2 - scroll.y,
+				0.75f, 1,
+				1, 1, 0, 1
+			);
+		if (player.pos.y > 28000)
+			tuto_end();
+
+	}
 }
 
 void player_render()
 {
+	sprite_render(
+		playerSpr,
+		player.pos.x - scroll.x, player.pos.y - scroll.y,
+		player.scale.x, player.scale.y,
+		player.TexPos.x, player.TexPos.y,
+		player.TexSize.x, player.TexSize.y,
+		player.pivot.x, player.pivot.y,
+		ToRadian(0),
+		1, 1, 1, 1
+	);
+
+	sprite_render(
+		heartUISpr,
+		MAPCHIP_SIZE * 2, MAPCHIP_SIZE * 2 - 10,
+		0.5f, 0.5f,
+		0, 0,
+		128, 128,
+		64, 64,
+		ToRadian(0),
+		1, 1, 1, 1
+	);
+
+	sprite_render(
+		scissorsUISpr,
+		MAPCHIP_SIZE * 2, MAPCHIP_SIZE * 4,
+		0.5f, 0.5f,
+		0, 0,
+		128, 128,
+		64, 64,
+		ToRadian(0),
+		1, 1, 1, 1
+	);
+
+	tuto_text_render();
+
 	primitive::rect(
 		player.pos - scroll, player.HalfSize * 2,
 		player.HalfSize,
 		player.angle,
-		{ 1,0,player.color.z,1 }
+		{ 1,0,player.color.z,0.5f }
 	);
+	
 	if (player.OnGround)
 	{
 		fadeout();
@@ -285,13 +414,14 @@ void player_render()
 void player_init()
 {
 	PlayerState = 0;
-	PlayerTimer = 0;
 	fade = 0;
 }
 
 void player_deinit()
 {
-
+	safe_delete(playerSpr);
+	safe_delete(heartUISpr);
+	safe_delete(scissorsUISpr);
 }
 
 void OutEnSetText(int EnType)
@@ -332,6 +462,15 @@ void OutEnSetText(int EnType)
 
 }
 
+void CalcResult()
+{
+	score += player.pos.y;
+	score += getCoinCount * 1000;
+	RecordResult(player.area);
+	nextScene = SCENE_RESULT;
+	//HACK:temporary score calc
+}
+
 void fadeout()
 {
 	primitive::rect(
@@ -342,42 +481,114 @@ void fadeout()
 		1, 1, 1, fade
 	);
 	fade += 0.008f;
-}
-
-void CalcResult()
-{
-	score = player.pos.y;
-	nextScene = SCENE_RESULT;
-	//HACK:temporary score calc
-}
-
-void RecordResult(int stage)
-{
-	using namespace std;
-	ofstream ofs;
-	switch (stage)
-	{
-	case 0:
-		ofs.open("score0.txt");
-		if (!ofs)return;
-		if (ofs)
-		{
-			ofs << score;
-			ofs.close();
-		}
-		break;
-	case 1:
-		ofs.open("score1.txt");
-		if (!ofs)return;
-		if (ofs)
-		{
-			ofs << score;
-			ofs.close();
-		}
-		break;
+	if (fade > 1) {
+		player.OnGround = false;
+		CalcResult();
 	}
-		
-	
-	
 }
 
+
+void player_act_init(int action)
+{
+	player.AnimeKoma = 0;
+	player.AnimeTimer = 0;
+	player.TexPos.y = PLAYER_TEX_H * action;
+}
+
+void player_act()
+{
+	switch (player.act)
+	{
+	case IDLE_INIT:
+		player_act_init(0);
+		++player.act;
+		//fallthrough
+	case IDLE:
+		player_moveX();
+		player_moveY();
+		//no animation
+		player.TexPos.x = 0;
+		if (player.speed.y > 7.0f) {
+			player.act = ACCELERATION_Y_LOW_INIT;
+			break;
+		}
+		break;
+	case ACCELERATION_Y_LOW_INIT:
+		player_act_init(1);
+		++player.act;
+		//fallthrough
+	case ACCELERATION_Y_LOW:
+		player_moveX();
+		player_moveY();
+		//no animation
+		player.TexPos.x = 0;
+		if (player.speed.y > 14.0f) {
+			player.act = ACCELERATION_Y_MED_INIT;
+			break;
+		}
+		player.TexPos.x = 0;
+		if (player.speed.y < 7.0f) {
+			player.act = IDLE_INIT;
+			break;
+		}
+		break;
+	case ACCELERATION_Y_MED_INIT:
+		player_act_init(2);
+		++player.act;
+		//fallthrough
+	case ACCELERATION_Y_MED:
+		player_moveX();
+		player_moveY();
+		//no animation
+		player.TexPos.x = 0;
+		player.TexPos.x = 0;
+		if (player.speed.y > 20.0f) {
+			player.act = ACCELERATION_Y_HI_INIT;
+			break;
+		}
+		player.TexPos.x = 0;
+		if (player.speed.y < 14.0f) {
+			player.act = ACCELERATION_Y_LOW_INIT;
+			break;
+		}
+		break;
+	case ACCELERATION_Y_HI_INIT:
+		player_act_init(3);
+		++player.act;
+		//fallthrough
+	case ACCELERATION_Y_HI:
+		player_moveX();
+		player_moveY();
+		//no animation
+		player.TexPos.x = 0;
+		if (player.speed.y < 20.0f) {
+			player.act = ACCELERATION_Y_MED_INIT;
+			break;
+		}
+		break;
+	case CLEAR_INIT:
+		player_act_init(4);
+		++player.act;
+		//fallthrough
+	case CLEAR:
+		//no move
+		player.AnimeKoma = player.AnimeTimer / 12 % 2;
+		player.TexPos.x = player.AnimeKoma * player.TexSize.x;
+		++player.AnimeTimer;
+		//TODO loop animation
+
+		break;
+	case DEAD_INIT:
+		player_act_init(3);
+		++player.act;
+		//fallthrough
+		
+	case DEAD:
+		player_moveY();
+		//noanimation
+		player.TexPos.x = 0;
+		//TODO dead script
+		break;
+
+	}
+}

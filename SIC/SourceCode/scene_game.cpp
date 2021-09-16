@@ -101,8 +101,8 @@ void game_update()
 			break;
 		}
 
-		player_update();  
 		map_update();
+		player_update();  
 		enemy_update();
 		coin_update();
 		scrollMap();
@@ -131,6 +131,8 @@ void game_reset()
 	PlayerState = 1;
 	EnemyState = 1;
 	ResultState = 1;
+	CoinState = 0;
+	MapState = 1;
 	forcereset = false;
 	for (int i = 0; i < ENEMY_MAX; ++i)
 	{
@@ -148,7 +150,7 @@ void scrollBar(VECTOR2 scroll)
 	if (scroll.y > player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0)
 		scroll.y = player.pos.y - player.HalfSize.y - SCROLL_MARGIN_Y * 0;
 
-	scroll.y /= SCREEN_H * TEMP_MASICNUMBER / SCREEN_H;
+	scroll.y /= mapHeight[player.area] / SCREEN_H;
 	//シークバー現在地 = scroll.y / コースの全長 / スクリーンの高さ
 	scroll.y *= 1 - CalcMargin * 2;
 
