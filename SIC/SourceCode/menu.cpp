@@ -6,6 +6,7 @@ int MenuTimer;
 int cursor;
 
 Sprite* sprStage[4];
+int hiscore[4];
 
 enum stage
 {
@@ -14,6 +15,28 @@ enum stage
 	third,
 	fourth,
 };
+
+void LoadHiscore()
+{
+	using namespace std;
+	ifstream ifs;
+	ifs.open("score0.txt");
+	if (!ifs) return;
+	if (ifs)
+	{
+		ifs >> hiscore[0];
+		ifs.close();
+	}
+	ifs.open("score1.txt");
+	if (!ifs) return;
+	if (ifs)
+	{
+		ifs >> hiscore[1];
+		ifs.close();
+	}
+}
+
+
 
 void menu_update()
 {
@@ -30,7 +53,7 @@ void menu_update()
 		MenuState++;
 		//fallthrough
 	case 1:
-		
+		LoadHiscore();
 
 		MenuState++;
 		//fallthrough

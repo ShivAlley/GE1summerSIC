@@ -10,13 +10,65 @@ VECTOR2 scroll;
 VECTOR2 MousePos;
 POINT mouse;
 Sprite* playerSpr;
+Sprite* heartUISpr;
+Sprite* scissorsUISpr;
+
+int PlayerTimer = 0;
+
+void RecordResult(int stage)
+{
+	using namespace std;
+	ofstream ofs;
+	switch (stage)
+	{
+	case 0:
+		ofs.open("score0.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	case 1:
+		ofs.open("score1.txt");
+		if (!ofs)return;
+		if (ofs)
+		{
+			ofs << score;
+			ofs.close();
+		}
+		break;
+	}
 
 
 
+}
+
+void stage_start_wait()
+{
+	if (PlayerTimer == 5)
+	{
+		player.speed = { 0,0 };
+	}
+	if (PlayerTimer > 5)
+	{
+		player.speed.y += GRAVITY; // accele
+	}
+	if (TRG(0) & PAD_SPACE)
+	{
+		PlayerTimer++;
+	}
+	if (PlayerTimer < 5)
+	{
+		PlayerTimer++;
+	}
+}
 
 
 void player_moveX()
 {
+	
 	if (STATE(0) & PAD_RIGHT && !(STATE(0) & PAD_LEFT)) {
 		player.speed.x += 0.3f;
 	}
@@ -122,6 +174,8 @@ void player_update()
 		//ini setting
 		//player.spr = sprite_load(L"./Data/Images/chara_marged.png");
 		playerSpr = sprite_load(L"./Data/Images/chara_marged.png");
+		heartUISpr = sprite_load(L"./Data/Images/life.png");
+		scissorsUISpr = sprite_load(L"./Data/Images/cut.png");
 		++PlayerState;
 		//fallthrough
 	case 1:
@@ -146,6 +200,7 @@ void player_update()
 	case 2: 
 	{
 		//loop
+		stage_start_wait();
 		player_act();
 		debug::setString("scalex%f", player.scale.x);
 		debug::setString("scaley%f", player.scale.y);
@@ -155,6 +210,7 @@ void player_update()
 		debug::setString("fade%f", fade);
 		debug::setString("speedY%f", player.speed.y);
 		debug::setString("HP%d", player.HitPoint);
+
 		
 		GetCursorPos(&mouse);
 		ScreenToClient(window::getHwnd(), &mouse);
@@ -317,6 +373,28 @@ void player_render()
 		1, 1, 1, 1
 	);
 
+	sprite_render(
+		heartUISpr,
+		MAPCHIP_SIZE * 2, MAPCHIP_SIZE * 2 - 10,
+		0.5f, 0.5f,
+		0, 0,
+		128, 128,
+		64, 64,
+		ToRadian(0),
+		1, 1, 1, 1
+	);
+
+	sprite_render(
+		scissorsUISpr,
+		MAPCHIP_SIZE * 2, MAPCHIP_SIZE * 4,
+		0.5f, 0.5f,
+		0, 0,
+		128, 128,
+		64, 64,
+		ToRadian(0),
+		1, 1, 1, 1
+	);
+
 	tuto_text_render();
 
 	primitive::rect(
@@ -342,6 +420,8 @@ void player_init()
 void player_deinit()
 {
 	safe_delete(playerSpr);
+	safe_delete(heartUISpr);
+	safe_delete(scissorsUISpr);
 }
 
 void OutEnSetText(int EnType)
@@ -386,6 +466,7 @@ void CalcResult()
 {
 	score += player.pos.y;
 	score += getCoinCount * 1000;
+	RecordResult(player.area);
 	nextScene = SCENE_RESULT;
 	//HACK:temporary score calc
 }
@@ -501,6 +582,7 @@ void player_act()
 		player_act_init(3);
 		++player.act;
 		//fallthrough
+		
 	case DEAD:
 		player_moveY();
 		//noanimation

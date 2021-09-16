@@ -339,8 +339,6 @@ void moveEnemy3(OBJ2D* obj)
 
 void moveEnemy4(OBJ2D* obj)
 {
-    float deadFreeze;
-    float deadFall;
     switch (obj->state)
     {
     case 0:

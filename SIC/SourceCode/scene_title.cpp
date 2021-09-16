@@ -41,13 +41,7 @@ void title_update()
 			exit(0);
 		}
 		break;
-		/*switch (choose)
-		{
-		case 0:
-
-		default:
-			break;
-		}*/
+		
 
 	}
 	TitleTimer++;
