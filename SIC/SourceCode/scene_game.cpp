@@ -5,9 +5,12 @@ int GameTimer;
 float ScrollMerginY = 0;
 bool forcereset = false;
 
+Sprite* barSpr;
+Sprite* iconSpr;
+
+
 void scrollMap()
 {
-
 	if (scroll.x < player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X)
 		scroll.x = player.pos.x + player.HalfSize.x - SCREEN_W + SCROLL_MERGIN_X;
 	if (scroll.x > player.pos.x - player.HalfSize.x - SCROLL_MERGIN_X)
@@ -74,6 +77,8 @@ void game_deinit()
 	enemy_deinit();
 	player_deinit();
 	coin_deinit();
+	safe_delete(barSpr);
+	safe_delete(iconSpr);
 	
 }
 void game_update()
@@ -91,6 +96,12 @@ void game_update()
 		//パラメータの設定
 		
 		setBlendMode(Blender::BS_ALPHA);
+		barSpr = sprite_load(L"./Data/Images/lifegage.png");
+		iconSpr = sprite_load(L"./Data/Images/icon.png");
+		player_init();
+		enemy_init();
+		map_init();
+		coin_init();
 		GameState++;
 		/*fallthrough*/
 	case 2:
@@ -164,20 +175,29 @@ void scrollBar(VECTOR2 scroll)
 		{ 0,0 },
 		ToRadian(0),
 		{ 1, 1, 1, 1 }
+	);
 
+
+	sprite_render(
+		barSpr,
+		SCREEN_W - MAPCHIP_SIZE * 2, margin,
+		1, 1,
+		0, 0,
+		64, 578,
+		0, 0,
+		0,
+		1, 1, 1, 1
 	);
-	primitive::rect(//シークバー上限
-		{ 1275,margin },
-		{ 5,5 },
-		{ 0,0 },
+
+	sprite_render(
+		iconSpr,
+		SCREEN_W - MAPCHIP_SIZE * 1.5f, margin + scroll.y,
+		1, 1,
+		0, 0,
+		32, 32,
+		0, 0,
 		ToRadian(0),
-		{ 0, 0, 1, 1 }
+		1, 1, 1, 1
 	);
-	primitive::rect(//シークバー下限
-		{ 1275,SCREEN_H - margin },
-		{ 5,5 },
-		{ 0,0 },
-		ToRadian(0),
-		{ 1, 0, 0, 1 }
-	);
+	
 }

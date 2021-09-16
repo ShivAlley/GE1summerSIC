@@ -1,7 +1,7 @@
 #include "all.h"
 
 int MapState;
-Sprite* mapBack[3];
+Sprite* mapBack[4];
 int mapHeight[4];
 
 void map_update()
@@ -10,19 +10,20 @@ void map_update()
 	{
 	case 0:
 		//ini setting
-		mapBack[0] = sprite_load(L"./Data/Images/haikei0.png");
-		mapBack[1] = sprite_load(L"./Data/Images/haikei0.png");
-		mapBack[2] = sprite_load(L"./Data/Images/haikei0.png");
+		mapBack[0] = sprite_load(L"./Data/Images/haikei0R.png");
+		mapBack[1] = sprite_load(L"./Data/Images/haikei0G.png");
+		mapBack[2] = sprite_load(L"./Data/Images/haikei2.png");
+		mapBack[3] = sprite_load(L"./Data/Images/haikei3.png");
 		//TODO need load haikei1 and haikei2
 		++MapState;
 		//fallthrough
 	case 1:
 		//param set
-		mapHeight[0] = SCREEN_H * 10000;
-		mapHeight[1] = 14400;
-		mapHeight[2] = 14400;
-		mapHeight[3] = 14400;
-		//TODO setting map height
+		mapHeight[0] = SCREEN_H * 1000;
+		mapHeight[1] = SCREEN_H * 30;
+		mapHeight[2] = SCREEN_H * 40;
+		mapHeight[3] = SCREEN_H * 50;
+		
 
 		++MapState;
 		//fallthrough
@@ -70,118 +71,142 @@ void map_render()
 	}
 	case 1:
 	{
-		sprite_render(
-			mapBack[0],
-			0 - scroll.x, 0 - scroll.y,
-			1, 1,
+		primitive::rect(
 			0, 0,
-			SCREEN_W, mapHeight[1],
+			SCREEN_W, SCREEN_H,
 			0, 0,
-			0,
+			ToRadian(0),
 			1, 1, 1, 1
 		);
+		for (int i = 0; i < 30; ++i)
+		{
+			if (i % 2 == 0)
+			{
+				sprite_render(
+					mapBack[0],
+					0, SCREEN_H * i - scroll.y ,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H * 2,
+					0, 0,
+					ToRadian(0),
+					1, 1, 1, 1
+				);
+			}
+			if (i == 29)
+			{
+				sprite_render(
+					mapBack[1],
+					0, SCREEN_H * i - scroll.y,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H,
+					0, 0,
+					ToRadian(0),
+					1, 1, 1, 1
+				);
+			}
+		}
 		break;
 		
 	}
 	case 2:
 	{
-		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
+		primitive::rect(
+			0, 0,
+			SCREEN_W, SCREEN_H,
+			0, 0,
+			ToRadian(0),
+			1, 1, 1, 1
+		);
+		
+		for (int i = 0; i < 40; ++i)
 		{
-			if (i % 2)
+			if (i % 2 == 0)
 			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
+				sprite_render(
+					mapBack[0],
+					0, SCREEN_H * i - scroll.y,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H * 2,
+					0, 0,
 					ToRadian(0),
-					{ 0.529f, 0.949f,0.361f, 1 }
+					1, 1, 1, 1
 				);
 			}
-			else
+			if (i == 39)
 			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
+				sprite_render(
+					mapBack[1],
+					0, SCREEN_H * i - scroll.y,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H,
+					0, 0,
 					ToRadian(0),
-					{ 0.973f, 1, 0.388f, 1 }
+					1, 1, 1, 1
 				);
 			}
-
 		}
 		break;
+
 
 	}
 	case 3:
 	{
-		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
+		primitive::rect(
+			0, 0,
+			SCREEN_W, SCREEN_H,
+			0, 0,
+			ToRadian(0),
+			1, 1, 1, 1
+		);
+		for (int i = 0; i < 50; ++i)
 		{
-			if (i % 2)
+			if (i % 2 == 0)
 			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
+				sprite_render(
+					mapBack[0],
+					0, SCREEN_H* i - scroll.y,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H * 2,
+					0, 0,
 					ToRadian(0),
-					{ 0.125f, 0.008f,0.412f, 1 }
+					1, 1, 1, 1
 				);
 			}
-			else
+			if (i == 49)
 			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
+				sprite_render(
+					mapBack[1],
+					0, SCREEN_H * i - scroll.y,
+					1, 1,
+					0, 0,
+					SCREEN_W, SCREEN_H,
+					0, 0,
 					ToRadian(0),
-					{ 0.357f, 0.027f, 0.522f, 1 }
+					1, 1, 1, 1
 				);
 			}
-
 		}
 		break;
 
 	}
-	case 4:
-	{
-		for (int i = 0; i < TEMP_MASICNUMBER; ++i)
-		{
-			if (i % 2)
-			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
-					ToRadian(0),
-					{ 0.18f, 0.769f,1, 1 }
-				);
-			}
-			else
-			{
-				primitive::rect(
-					{ 0 - scroll.x, SCREEN_H * i - scroll.y },
-					{ SCREEN_W, SCREEN_H },
-					{ 0,0 },
-					ToRadian(0),
-					{ 0.98f, 0.8f, 0.118f, 1 }
-				);
-			}
-
-		}
-		break;
-
-	}
+	
 	}
 	
 }
 
 void map_init()
 {
-	
+	MapState = 0;
 }
 
 void map_deinit()
 {
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		safe_delete(mapBack[i]);
 	}

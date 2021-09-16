@@ -45,7 +45,7 @@ void menu_update()
 	switch (MenuState)
 	{
 	case 0:
-		sprStage[0] = sprite_load(L"./Data/Images/stage1.png");
+		sprStage[0] = sprite_load(L"./Data/Images/tutorial.png");
 		//TODO load tutorial sprite
 		sprStage[1] = sprite_load(L"./Data/Images/stage1.png");
 		sprStage[2] = sprite_load(L"./Data/Images/stage2.png");
@@ -80,7 +80,7 @@ void menu_update()
 
 void menu_render()
 {
-	GameLib::clear(0.2f, 0.2f, 0.2f);
+	GameLib::clear(0.482f, 0.953f, 0.486f);
 	/*primitive::rect(
 		SCREEN_W / 5, SCREEN_H / 2,
 		MAPCHIP_SIZE, MAPCHIP_SIZE,

@@ -53,7 +53,7 @@ void title_render()
 	//debug::setString("title_timer:%d", title_timer);
 	//debug::setString("title_timer/2:%d", title_timer / 32);
 	//debug::setString("title_timer%%2:%d", title_timer / 32 % 2);
-	GameLib::clear(0.2f, 0.2f, 0.2f);
+	GameLib::clear(0.482f, 0.953f, 0.486f);
 
 	//if (title_timer / 32 % 2)
 	//{

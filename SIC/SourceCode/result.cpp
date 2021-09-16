@@ -28,9 +28,10 @@ void result_update()
 
 void result_render()
 {
-	GameLib::clear(0.5f, 0.2f, 0.2f);
-	//text_out(1, "score", 300, 500, 2, 2, 1, 1, 0);
-	text_out(1, str, 300, 500, 2, 2, 1, 1, 0);
+	GameLib::clear(0.482f, 0.953f, 0.486f);
+
+	text_out(1, str, SCREEN_W / 3, SCREEN_H / 2, 2, 2, 1, 1, 0);
+	text_out(1, "your score", SCREEN_W / 3, SCREEN_H / 3, 2, 2, 1, 1, 0);
 }
 
 void result_init()

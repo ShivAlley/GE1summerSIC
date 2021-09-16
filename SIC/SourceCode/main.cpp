@@ -13,7 +13,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	//6:ゲームループ
 
-	while (GameLib::gameLoop(true))
+	while (GameLib::gameLoop())
 	{
 		//シーン切り替え処理
 		if (curScene != nextScene)
